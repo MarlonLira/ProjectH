@@ -1,0 +1,35 @@
+{
+  "Database": {
+    "MySqlWEB": {
+      "host": "remotemysql.com",
+      "port": 3306,
+      "username": "Dzod7oem8F",
+      "password": "7dJzvEK5gA",
+      "schema": "Dzod7oem8F"
+    },
+    "ForceSync": false,
+    "AlterSync": false,
+    "DropAllTable": false,
+    "Logging": false,
+    "IsLogger": false
+  },
+  "SMTP": {
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "secure": false,
+    "auth": {
+      "user": "help.simpleparking@gmail.com",
+      "pass": "hikpucfalhaqxkhd"
+    },
+    "tls": {
+      "rejectUnauthorized": false
+    }
+  },
+  "LogRecord": {
+    "IsInfo": true,
+    "IsWarn": true,
+    "IsCrit": true,
+    "IsUnkn": true,
+    "IsError": true
+  }
+}
