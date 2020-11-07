@@ -20,6 +20,18 @@ export class LogEntity extends BaseEntity {
 
   @AutoMap()
   public userId: string;
+
+  constructor(json?: any) {
+    super(json);
+    if (json) {
+      this.level = json.level;
+      this.message = json.message;
+      this.source = json.source;
+      this.code = json.code;
+      this.obj = json.obj;
+      this.userId = json.userId;
+    }
+  }
 }
 
 export class LogDAO extends BaseEntityDAO { }

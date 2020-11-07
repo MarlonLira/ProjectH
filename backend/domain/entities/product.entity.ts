@@ -22,6 +22,18 @@ export class ProductEntity extends BaseEntity {
 
   @AutoMap()
   public category: CategoryEntity[];
+
+  constructor(json?: any) {
+    super(json);
+    if (json) {
+      this.status = json.status;
+      this.name = json.name;
+      this.amount = json.amount;
+      this.value = json.value;
+      this.categoryId = json.categoryId;
+      this.category = json.category;
+    }
+  }
 }
 
 export class ProductDAO extends BaseEntityDAO { }

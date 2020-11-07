@@ -16,7 +16,7 @@ export class CategoryController {
   @httpPost('/category')
   post(@request() req: Request<any>, @response() res: Response<any>): Promise<any> {
     return new Promise((resolve) => {
-      this.service.save(req.body)
+      this.service.save(new CategoryModel(req.body))
         .then((result: CategoryModel) => resolve(Http.SendMessage(res, HttpCode.Ok, HttpMessage.Saved_Successfully, 'Category', result)))
         .catch((error: any) => resolve(Http.SendErrorMessage(res, error, 'Category')));
     });
@@ -25,7 +25,7 @@ export class CategoryController {
   @httpPut('/category')
   put(@request() req: Request<any>, @response() res: Response<any>): Promise<any> {
     return new Promise((resolve) => {
-      this.service.update(req.body)
+      this.service.update(new CategoryModel(req.body))
         .then((result: any) => resolve(Http.SendMessage(res, HttpCode.Ok, HttpMessage.Updated_Successfully, 'Category', result)))
         .catch((error: any) => resolve(Http.SendErrorMessage(res, error, 'Category')));
     });

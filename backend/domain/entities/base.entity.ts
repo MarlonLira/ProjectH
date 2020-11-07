@@ -6,7 +6,7 @@ export const _instance = Context.getInstance();
 
 export class BaseEntity {
   @AutoMap()
-  public id: String;
+  public id: number;
 
   @AutoMap()
   public createdAt: Date;

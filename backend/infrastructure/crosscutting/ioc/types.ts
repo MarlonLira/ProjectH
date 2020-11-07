@@ -6,4 +6,6 @@ export const TYPES = {
   // Repositories Types
   IProductRepository: Symbol('IProductRepository'),
   ICategoryRepository: Symbol('ICategoryRepository'),
+
+  IMapper: Symbol('IMapper'),
 };

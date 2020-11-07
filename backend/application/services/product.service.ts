@@ -1,4 +1,4 @@
-import { Mapper } from "@nartc/automapper";
+import { AutoMapper, Mapper } from "@nartc/automapper";
 import { inject, injectable } from "inversify";
 import { ProductEntity } from "../../domain/entities/product.entity";
 import { IProductRepository } from "../../domain/interfaces/product-repository.interface";
@@ -10,19 +10,22 @@ import { ProductModel } from "../models/product.model";
 @injectable()
 export class ProductService implements IProductService {
 
-  constructor(@inject(TYPES.IProductRepository) private repository: IProductRepository) { }
+  constructor(
+    @inject(TYPES.IProductRepository) private repository: IProductRepository,
+    @inject(TYPES.IMapper) private mapper: AutoMapper,
+  ) { }
 
   save(entity: ProductModel): Promise<ProductModel> {
     return new Promise((resolve, reject) => {
-      this.repository.save(Mapper.map(entity, ProductEntity, ProductModel))
-        .then((result) => resolve(Mapper.map(result, ProductModel, ProductEntity)))
+      this.repository.save(this.mapper.map(entity, ProductEntity, ProductModel))
+        .then((result) => resolve(this.mapper.map(result, ProductModel, ProductEntity)))
         .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
     });
   }
 
   update(entity: ProductModel): Promise<ProductModel> {
     return new Promise((resolve, reject) => {
-      this.repository.update(Mapper.map(entity, ProductEntity, ProductModel))
+      this.repository.update(this.mapper.map(entity, ProductEntity, ProductModel))
         .then((result) => resolve(result))
         .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
     });
@@ -36,15 +39,15 @@ export class ProductService implements IProductService {
     });
   }
 
-  getById(id: string): Promise<ProductModel> {
+  getById(id: number): Promise<ProductModel> {
     return new Promise((resolve, reject) => {
       this.repository.getById(id)
-        .then((result) => resolve(Mapper.map(result, ProductModel, ProductEntity)))
+        .then((result) => resolve(this.mapper.map(result, ProductModel, ProductEntity)))
         .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
     });
   }
 
-  delete(id: string): Promise<any> {
+  delete(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.repository.delete(id)
         .then((result) => resolve(result))

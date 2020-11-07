@@ -19,6 +19,9 @@ import { CategoryService } from '../../../application/services/category.service'
 import { IProductService } from '../../../application/interfaces/product-service.interface';
 import { ICategoryService } from '../../../application/interfaces/category-service.interface';
 
+import { Mapper } from "@nartc/automapper";
+import { IMapper } from '../../../application/interfaces/mapper.interface';
+
 // Binds
 const container = new Container();
 
@@ -29,5 +32,8 @@ container.bind<ICategoryService>(TYPES.ICategoryService).to(CategoryService);
 // Repositories Binds
 container.bind<IProductRepository>(TYPES.IProductRepository).to(ProductRepository);
 container.bind<ICategoryRepository>(TYPES.ICategoryRepository).to(CategoryRepository);
+
+// Constants
+container.bind<IMapper>(TYPES.IMapper).toConstantValue(Mapper);
 
 export { container };

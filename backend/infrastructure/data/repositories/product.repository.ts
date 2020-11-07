@@ -13,11 +13,11 @@ export class ProductRepository implements IProductRepository {
     throw new Error("Method not implemented.");
   }
 
-  getById(id: string): Promise<ProductEntity> {
+  getById(id: number): Promise<ProductEntity> {
     throw new Error("Method not implemented.");
   }
 
-  delete(id: string): Promise<any> {
+  delete(id: number): Promise<any> {
     throw new Error("Method not implemented.");
   }
 
