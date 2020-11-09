@@ -31,7 +31,7 @@ export class Context {
   /* #endregion */
 
   public static getInstance(): Sequelize {
-    this._instance = Attributes.ReturnIfValid(this._instance, this.createInstance());
+    this._instance = Attributes.returnIfValid(this._instance, this.createInstance());
     return this._instance;
   }
 

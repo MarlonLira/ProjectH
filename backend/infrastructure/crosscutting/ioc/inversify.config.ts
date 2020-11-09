@@ -19,7 +19,10 @@ import { CategoryService } from '../../../application/services/category.service'
 import { IProductService } from '../../../application/interfaces/product-service.interface';
 import { ICategoryService } from '../../../application/interfaces/category-service.interface';
 
+// Constants
 import { Mapper } from "@nartc/automapper";
+
+// Constants interfaces
 import { IMapper } from '../../../application/interfaces/mapper.interface';
 
 // Binds
