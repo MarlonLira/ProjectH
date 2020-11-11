@@ -10,7 +10,7 @@ import * as bodyParser from 'body-parser';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from '../../infrastructure/crosscutting/ioc/inversify.config';
 import { Logger } from '../../application/commons/core/logger';
-import { Database } from '../../infrastructure/data/context/database';
+import { Persistence } from '../../infrastructure/data/context/pst.context';
 
 class Server {
 
@@ -47,7 +47,7 @@ class Server {
   }
 
   private database() {
-    new Database().Build();
+    new Persistence().Build();
   }
 
   public status() {

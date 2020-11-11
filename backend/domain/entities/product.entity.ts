@@ -12,24 +12,27 @@ export class ProductEntity extends BaseEntity {
   public name: string;
 
   @AutoMap()
-  public amount: number;
+  public barCode: string;
 
   @AutoMap()
   public value: number;
 
   @AutoMap()
+  public amount: number;
+
+  @AutoMap()
   public categoryId: number;
 
   @AutoMap()
-  public category: CategoryEntity[];
+  public category: CategoryEntity;
 
   constructor(json?: any) {
     super(json);
     if (json) {
       this.status = json.status;
       this.name = json.name;
-      this.amount = json.amount;
       this.value = json.value;
+      this.amount = json.amount;
       this.categoryId = json.categoryId;
       this.category = json.category;
     }
