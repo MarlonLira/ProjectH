@@ -11,9 +11,7 @@ export const CategoryMapping: ModelAttributes = {
     allowNull: false
   },
   name: {
-    type: new DataTypes.STRING(30)
-  },
-  measure: {
-    type: new DataTypes.STRING(5)
+    type: new DataTypes.STRING(30),
+    allowNull: false
   }
 };

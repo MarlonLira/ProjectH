@@ -1,9 +1,8 @@
 import { AutoMap } from "@nartc/automapper";
 import { TransactionType } from "../commons/enums/transactionType";
 import { BaseModel } from "./base.model";
-import { CategoryModel } from "./category.model";
 
-export class ProductModel extends BaseModel {
+export class UserModel extends BaseModel {
   @AutoMap()
   public status: TransactionType;
 
@@ -11,29 +10,34 @@ export class ProductModel extends BaseModel {
   public name: string;
 
   @AutoMap()
-  public barCode: string;
+  public registryCode: string;
 
   @AutoMap()
-  public value: number;
+  public email: string;
 
   @AutoMap()
-  public amount: number;
+  public password: string;
 
   @AutoMap()
-  public categoryId: number;
+  public gender: number;
 
   @AutoMap()
-  public category: CategoryModel;
+  public birthday: Date;
+
+  @AutoMap()
+  public image: any;
 
   constructor(json?: any) {
     super(json);
     if (json) {
       this.status = json.status;
       this.name = json.name;
-      this.value = json.value;
-      this.amount = json.amount;
-      this.categoryId = json.categoryId;
-      this.category = json.category;
+      this.registryCode = json.registryCode;
+      this.email = json.email;
+      this.password = json.password;
+      this.gender = json.gender;
+      this.birthday = json.birthday;
+      this.image = json.image;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { DataTypes, ModelAttributes } from 'sequelize';
 
-export const ProductMapping: ModelAttributes = {
+export const PointMapping: ModelAttributes = {
   id: {
     type: new DataTypes.INTEGER(),
     autoIncrement: true,
@@ -10,17 +10,18 @@ export const ProductMapping: ModelAttributes = {
     type: new DataTypes.STRING(2),
     allowNull: false
   },
-  name: {
-    type: new DataTypes.STRING(30),
+  value: {
+    type: new DataTypes.DOUBLE(),
     allowNull: false
   },
-  amount: {
+  shoppingId: {
     type: new DataTypes.INTEGER()
   },
-  value: {
-    type: new DataTypes.DECIMAL()
-  },
-  categoryId: {
+  donationId: {
     type: new DataTypes.INTEGER()
+  },
+  userId: {
+    type: new DataTypes.INTEGER(),
+    allowNull: false
   }
 };
