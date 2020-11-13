@@ -1,12 +1,14 @@
 import { Sequelize } from 'sequelize';
 import * as Config from '../../../presentation/config.json';
 import { Logger } from '../../../application/commons/core/logger';
+import { Context } from './db.context';
 
 // Mappings
 import { LogDAO } from '../../../domain/entities/log.entity';
 import { ProductDAO } from '../../../domain/entities/product.entity';
 import { CategoryDAO } from '../../../domain/entities/category.entity';
-import { Context } from './db.context';
+import { UserDAO } from '../../../domain/entities/user.entity';
+import { PointDAO } from '../../../domain/entities/point.entity';
 
 const { ForceSync, AlterSync, DropAllTable, IsLogger } = Config.Database;
 
@@ -15,7 +17,7 @@ interface PersistenceModel {
   entity: Sequelize
 }
 
-export class Database {
+export class Persistence {
 
   public Build() {
     // The order influences creation in the database!
@@ -23,6 +25,8 @@ export class Database {
       { name: 'Category', entity: CategoryDAO.sequelize },
       { name: 'Product', entity: ProductDAO.sequelize },
       { name: 'Log', entity: LogDAO.sequelize },
+      { name: 'User', entity: UserDAO.sequelize },
+      { name: 'Point', entity: PointDAO.sequelize },
     ];
 
     Logger.Info('Database', 'Table verification started!');
@@ -32,9 +36,12 @@ export class Database {
     // N:N - belongs to many
 
     // 1:N - has many
+    CategoryDAO.hasMany(ProductDAO, { foreignKey: 'categoryId', as: 'products' });
+    UserDAO.hasMany(PointDAO, { foreignKey: 'userId', as: 'points' });
 
     // N:1 - belongs to
-
+    ProductDAO.belongsTo(CategoryDAO, { as: 'category' });
+    PointDAO.belongsTo(UserDAO, { as: 'user' });
 
     // 1:1 - has one
 

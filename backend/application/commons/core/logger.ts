@@ -1,4 +1,4 @@
-import { DateTimeNow } from "./innerDate";
+import { dateTimeNow } from "./innerDate";
 import * as clc from 'cli-color';
 import { LogLevel } from "../enums/log-level";
 import { LogModel } from "../../Models/log.model";
@@ -14,31 +14,31 @@ export class Logger {
   static Info(entity: any, message: string) {
     const name = entity.constructor.name;
     // tslint:disable-next-line: no-console
-    console.log(info(`${DateTimeNow()} INFO [${name === undefined || name === 'String' ? entity : name}] ${message}`));
+    console.log(info(`${dateTimeNow()} INFO [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
   static Warn(entity: any, message: string) {
     const name = entity.constructor.name;
     // tslint:disable-next-line: no-console
-    console.log(warn(`${DateTimeNow()} WARN [${name === undefined || name === 'String' ? entity : name}] ${message}`));
+    console.log(warn(`${dateTimeNow()} WARN [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
   static Error(entity: any, message: string) {
     const name = entity.constructor.name;
     // tslint:disable-next-line: no-console
-    console.log(error(`${DateTimeNow()} ERROR [${name === undefined || name === 'String' ? entity : name}] ${message}`));
+    console.log(error(`${dateTimeNow()} ERROR [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
   static Critical(entity: any, message: string) {
     const name = entity.constructor.name;
     // tslint:disable-next-line: no-console
-    console.log(crit(`${DateTimeNow()} CRIT [${name === undefined || name === 'String' ? entity : name}] ${message}`));
+    console.log(crit(`${dateTimeNow()} CRIT [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
   static Unknown(entity: any, message: string) {
     const name = entity.constructor.name;
     // tslint:disable-next-line: no-console
-    console.log(unkn(`${DateTimeNow()} UNKN [${name === undefined || name === 'String' ? entity : name}] ${message}`));
+    console.log(unkn(`${dateTimeNow()} UNKN [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
   static Default(log: LogModel | any) {

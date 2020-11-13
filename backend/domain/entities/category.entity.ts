@@ -10,10 +10,7 @@ export class CategoryEntity extends BaseEntity {
 
   @AutoMap()
   public name: string;
-
-  @AutoMap()
-  public measure: string;
-
+  
   @AutoMap()
   public products: ProductEntity[];
 
@@ -22,7 +19,6 @@ export class CategoryEntity extends BaseEntity {
     if (json) {
       this.status = json.status;
       this.name = json.name;
-      this.measure = json.measure;
       this.products = json.products;
     }
   }
