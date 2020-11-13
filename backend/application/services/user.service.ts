@@ -58,7 +58,7 @@ export class UserService implements IUserService {
       try {
         if (user.email) {
           const _user: UserModel = this.mapper.map(await this.repository.getByEmail(user.email), UserModel);
-          if (Attributes.isValid(_user) && Crypto.compare(user.password, _user.password)) {
+          if (Attributes.isValid(_user.email) && Crypto.compare(user.password, _user.password)) {
             user = _user;
             user.password = undefined;
             const result = await Crypto.encrypt(JSON.stringify(user), CryptoType.DEFAULT);
