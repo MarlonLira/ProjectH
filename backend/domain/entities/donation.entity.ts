@@ -41,4 +41,4 @@ export class DonationEntity extends BaseEntity {
 
 export class DonationDAO extends BaseEntityDAO { }
 
-DonationDAO.init(DonationMapping, { sequelize: _instance, tableName: 'category' });
+DonationDAO.init(DonationMapping, { sequelize: _instance, tableName: 'donation' });
