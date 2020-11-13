@@ -1,4 +1,5 @@
 import { AutoMap } from "@nartc/automapper";
+import { HttpCode } from "../commons/enums/httpCode";
 import { BaseModel } from "./base.model";
 
 export class LogModel extends BaseModel {
@@ -12,13 +13,16 @@ export class LogModel extends BaseModel {
   public source: string;
 
   @AutoMap()
-  public code: string;
+  public code: HttpCode;
 
   @AutoMap()
   public obj: string;
 
   @AutoMap()
   public userId: string;
+
+  @AutoMap()
+  isRecord: boolean;
 
   constructor(json?: any) {
     super(json);
@@ -28,6 +32,7 @@ export class LogModel extends BaseModel {
       this.source = json.source;
       this.code = json.code;
       this.obj = json.obj;
+      this.isRecord = json.isRecord;
       this.userId = json.userId;
     }
   }
