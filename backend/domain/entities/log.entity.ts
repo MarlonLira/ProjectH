@@ -1,11 +1,12 @@
 import { AutoMap } from "@nartc/automapper";
 import { HttpCode } from "../../application/commons/enums/httpCode";
+import { LogLevel } from "../../application/commons/enums/log-level";
 import { LogMapping } from "../../infrastructure/data/mappings/log.mapping";
 import { BaseEntity, BaseEntityDAO, _instance } from "./base.entity";
 
 export class LogEntity extends BaseEntity {
   @AutoMap()
-  public level: string;
+  public level: LogLevel;
 
   @AutoMap()
   public message: string;

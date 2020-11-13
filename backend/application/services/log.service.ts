@@ -24,8 +24,12 @@ export class LogService implements ILogService {
       Logger.Default(log);
       if (log.isRecord) {
         this.repository.save(this.mapper.map(log, LogEntity))
-          .then((result: any) => resolve(result))
-          .catch((error: any) => reject(error));
+          .then((result: any) => {
+            resolve(result)
+          })
+          .catch((error: any) => {
+            reject(error)
+          });
       }
     });
   }
