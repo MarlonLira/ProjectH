@@ -9,6 +9,7 @@ import { ProductDAO } from '../../../domain/entities/product.entity';
 import { CategoryDAO } from '../../../domain/entities/category.entity';
 import { UserDAO } from '../../../domain/entities/user.entity';
 import { PointDAO } from '../../../domain/entities/point.entity';
+import { DonationDAO } from '../../../domain/entities/donation.entity';
 import { RankDAO } from '../../../domain/entities/rank.entity';
 
 const { ForceSync, AlterSync, DropAllTable, IsLogger } = Config.Database;
@@ -28,6 +29,7 @@ export class Persistence {
       { name: 'Log', entity: LogDAO.sequelize },
       { name: 'User', entity: UserDAO.sequelize },
       { name: 'Point', entity: PointDAO.sequelize },
+      { name: 'Donation', entity: DonationDAO.sequelize },
       { name: 'Rank', entity: RankDAO.sequelize },
     ];
 
@@ -39,11 +41,15 @@ export class Persistence {
 
     // 1:N - has many
     CategoryDAO.hasMany(ProductDAO, { foreignKey: 'categoryId', as: 'products' });
+    CategoryDAO.hasMany(DonationDAO, { foreignKey: 'categoryId', as: 'donations' });
     UserDAO.hasMany(PointDAO, { foreignKey: 'userId', as: 'points' });
+    UserDAO.hasMany(DonationDAO, { foreignKey: 'userId', as: 'donations' });
 
     // N:1 - belongs to
     ProductDAO.belongsTo(CategoryDAO, { as: 'category' });
     PointDAO.belongsTo(UserDAO, { as: 'user' });
+    DonationDAO.belongsTo(UserDAO, { as: 'user' });
+    DonationDAO.belongsTo(CategoryDAO, { as: 'category' });
 
     // 1:1 - has one
 
