@@ -27,7 +27,7 @@ export const UserMapping: ModelAttributes = {
     allowNull: false
   },
   gender: {
-    type: new DataTypes.TINYINT(),
+    type: new DataTypes.STRING(2),
     allowNull: false
   },
   birthday: {
