@@ -1,8 +1,9 @@
-import { UserModel } from "../models/user.model";
+import { PointModel } from "../models/point.model";
 
 export interface IPointService {
-  save(user: UserModel): Promise<UserModel>;
-  update(user: UserModel): Promise<any>;
+  save(product: PointModel): Promise<PointModel>;
+  update(product: PointModel): Promise<any>;
+  getById(id: number): Promise<PointModel>;
   delete(id: number): Promise<any>;
-  signin(user: UserModel): Promise<any>;
+  toList(): Promise<PointModel[]>;
 }
