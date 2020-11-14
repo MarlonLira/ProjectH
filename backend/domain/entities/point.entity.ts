@@ -1,4 +1,5 @@
 import { AutoMap } from '@nartc/automapper';
+import { Json } from '../../application/commons/core/json';
 import { TransactionType } from "../../application/commons/enums/transactionType";
 import { PointMapping } from '../../infrastructure/data/mappings/point.mapping';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
@@ -20,6 +21,7 @@ export class PointEntity extends BaseEntity {
   public userId: number;
 
   constructor(json?: any) {
+    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;
@@ -33,4 +35,4 @@ export class PointEntity extends BaseEntity {
 
 export class PointDAO extends BaseEntityDAO { }
 
-PointDAO.init(PointMapping, { sequelize: _instance, tableName: 'user' });
+PointDAO.init(PointMapping, { sequelize: _instance, tableName: 'point' });

@@ -13,18 +13,6 @@
     "Logging": false,
     "IsLogger": false
   },
-  "SMTP": {
-    "host": "smtp.gmail.com",
-    "port": 587,
-    "secure": false,
-    "auth": {
-      "user": "help.simpleparking@gmail.com",
-      "pass": "hikpucfalhaqxkhd"
-    },
-    "tls": {
-      "rejectUnauthorized": false
-    }
-  },
   "LogRecord": {
     "IsInfo": true,
     "IsWarn": true,

@@ -1,33 +1,35 @@
 import { AutoMap } from "@nartc/automapper";
-import { Json } from "../commons/core/json";
 import { TransactionType } from "../commons/enums/transactionType";
 import { BaseModel } from "./base.model";
 
-export class PointModel extends BaseModel {
+export class DonationModel extends BaseModel {
   @AutoMap()
   public status: TransactionType;
 
   @AutoMap()
-  public value: number;
+  public token: string;
 
   @AutoMap()
-  public shoppingId: number;
-
-  @AutoMap()
-  public donationId: number;
+  public amount: number;
 
   @AutoMap()
   public userId: number;
 
+  @AutoMap()
+  public condition: string;
+
+  @AutoMap()
+  public categoryId: number;
+
   constructor(json?: any) {
-    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;
-      this.value = json.value;
-      this.shoppingId = json.shoppingId;
-      this.donationId = json.donationId;
+      this.token = json.token;
+      this.amount = json.amount;
       this.userId = json.userId;
+      this.condition = json.condition;
+      this.categoryId = json.categoryId;
     }
   }
 }

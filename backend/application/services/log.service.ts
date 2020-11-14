@@ -45,7 +45,7 @@ export class LogService implements ILogService {
       _log.isRecord = IsInfo;
 
       this.save(_log)
-        .then(() => resolve(_log.message))
+        .then(() => resolve(_log.obj))
         .catch((error: any) => resolve(error));
     });
   }
@@ -61,7 +61,7 @@ export class LogService implements ILogService {
       _log.isRecord = IsWarn;
 
       this.save(_log)
-        .then(() => resolve(_log.message))
+        .then(() => resolve(_log.obj))
         .catch((error: any) => resolve(error));
     });
   }
@@ -77,7 +77,7 @@ export class LogService implements ILogService {
       _log.isRecord = IsError;
 
       this.save(_log)
-        .then(() => resolve(_log.message))
+        .then(() => resolve(_log.obj))
         .catch((error: any) => resolve(error));
     });
   }
@@ -93,7 +93,7 @@ export class LogService implements ILogService {
       _log.isRecord = IsCrit;
 
       this.save(_log)
-        .then(() => resolve(_log.message))
+        .then(() => resolve(_log.obj))
         .catch((error: any) => resolve(error));
     });
   }
@@ -108,7 +108,7 @@ export class LogService implements ILogService {
       _log.isRecord = IsUnkn;
 
       this.save(_log)
-        .then(() => resolve(_log.message))
+        .then(() => resolve(_log.obj))
         .catch((error: any) => resolve(error));
     });
   }

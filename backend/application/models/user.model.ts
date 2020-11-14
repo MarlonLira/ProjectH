@@ -1,6 +1,7 @@
 import { AutoMap } from "@nartc/automapper";
 import { TransactionType } from "../commons/enums/transactionType";
 import { BaseModel } from "./base.model";
+import { PointModel } from "./point.model";
 
 export class UserModel extends BaseModel {
   @AutoMap()
@@ -25,6 +26,12 @@ export class UserModel extends BaseModel {
   public birthday: Date;
 
   @AutoMap()
+  public score: number;
+
+  @AutoMap(() => PointModel)
+  public points: PointModel[];
+
+  @AutoMap()
   public image: any;
 
   constructor(json?: any) {
@@ -37,6 +44,8 @@ export class UserModel extends BaseModel {
       this.password = json.password;
       this.gender = json.gender;
       this.birthday = json.birthday;
+      this.score = json.score;
+      this.points = json.points;
       this.image = json.image;
     }
   }

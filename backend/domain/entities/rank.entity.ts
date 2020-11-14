@@ -1,19 +1,21 @@
 import { AutoMap } from '@nartc/automapper';
 import { Json } from '../../application/commons/core/json';
 import { TransactionType } from "../../application/commons/enums/transactionType";
-import { CategoryMapping } from '../../infrastructure/data/mappings/category.mapping';
+import { RankMapping } from '../../infrastructure/data/mappings/rank.mapping';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
-import { ProductEntity } from './product.entity';
 
-export class CategoryEntity extends BaseEntity {
+export class RankEntity extends BaseEntity {
   @AutoMap()
   public status: TransactionType;
 
   @AutoMap()
   public name: string;
-  
+
   @AutoMap()
-  public products: ProductEntity[];
+  public minScore: number;
+
+  @AutoMap()
+  public maxScore: number;
 
   constructor(json?: any) {
     json = Json.parse(json);
@@ -21,11 +23,12 @@ export class CategoryEntity extends BaseEntity {
     if (json) {
       this.status = json.status;
       this.name = json.name;
-      this.products = json.products;
+      this.minScore = json.minScore;
+      this.maxScore = json.maxScore;
     }
   }
 }
 
-export class CategoryDAO extends BaseEntityDAO { }
+export class RankDAO extends BaseEntityDAO { }
 
-CategoryDAO.init(CategoryMapping, { sequelize: _instance, tableName: 'category' });
+RankDAO.init(RankMapping, { sequelize: _instance, tableName: 'rank' });
