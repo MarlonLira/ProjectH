@@ -1,4 +1,4 @@
-import { AutoMapper, ProfileBase } from '@nartc/automapper';
+import { AutoMapper, mapWith, ProfileBase } from '@nartc/automapper';
 import { BaseEntity } from '../../domain/entities/base.entity';
 import { CategoryEntity } from '../../domain/entities/category.entity';
 import { LogEntity } from '../../domain/entities/log.entity';
@@ -27,5 +27,9 @@ export class EntityToModel extends ProfileBase {
     mapper.createMap(PointEntity, PointModel);
     mapper.createMap(LogEntity, LogModel);
     mapper.createMap(RankEntity, RankModel);
+
+    mapper.createMap(UserEntity, UserModel)
+      .forMember(dest => dest.points,
+        mapWith(PointModel, src => src.points, () => PointEntity));
   }
 }

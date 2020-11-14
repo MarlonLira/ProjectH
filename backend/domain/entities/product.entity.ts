@@ -1,4 +1,5 @@
 import { AutoMap } from '@nartc/automapper';
+import { Json } from '../../application/commons/core/json';
 import { TransactionType } from "../../application/commons/enums/transactionType";
 import { ProductMapping } from '../../infrastructure/data/mappings/product.mapping';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
@@ -27,6 +28,7 @@ export class ProductEntity extends BaseEntity {
   public category: CategoryEntity;
 
   constructor(json?: any) {
+    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;
