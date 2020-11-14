@@ -21,15 +21,6 @@ export class DonationModel extends BaseModel {
   @AutoMap()
   public categoryId: number;
 
-  @AutoMap()
-  public id: number;
-
-  @AutoMap()
-  public createdAt: Date;
-
-  @AutoMap()
-  public updatedAt: Date;
-
   constructor(json?: any) {
     super(json);
     if (json) {
@@ -39,9 +30,6 @@ export class DonationModel extends BaseModel {
       this.userId = json.userId;
       this.condition = json.condition;
       this.categoryId = json.categoryId;
-      this.id = json.id;
-      this.createdAt = json.createdAt;
-      this.updatedAt = json.updatedAt;
     }
   }
 }

@@ -19,7 +19,7 @@ export const LogMapping: ModelAttributes = {
     type: new DataTypes.STRING(30)
   },
   obj: {
-    type: new DataTypes.STRING(255)
+    type: new DataTypes.TEXT("long")
   },
   userId: {
     type: new DataTypes.INTEGER()
