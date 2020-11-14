@@ -25,7 +25,7 @@ export class CategoryController {
   @httpPut('/category')
   put(@request() req: Request<any>, @response() res: Response<any>): Promise<any> {
     return new Promise((resolve) => {
-      this.service.update(new CategoryModel(req.body))
+      this.service.update(req.body)
         .then((result: any) => resolve(Http.sendMessage(res, HttpCode.Ok, HttpMessage.Updated_Successfully, 'Category', result)))
         .catch((error: any) => resolve(Http.sendErrorMessage(res, error, 'Category')));
     });

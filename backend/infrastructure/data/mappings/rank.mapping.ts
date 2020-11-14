@@ -14,8 +14,12 @@ export const RankMapping: ModelAttributes = {
     type: new DataTypes.STRING(30),
     allowNull: false
   },
-  score: {
-    type: new DataTypes.STRING(30),
+  minScore: {
+    type: new DataTypes.DOUBLE,
+    allowNull: false
+  },
+  maxScore: {
+    type: new DataTypes.DOUBLE,
     allowNull: false
   }
 };
