@@ -6,10 +6,6 @@ export const LogMapping: ModelAttributes = {
     autoIncrement: true,
     primaryKey: true
   },
-  status: {
-    type: new DataTypes.STRING(2),
-    allowNull: false
-  },
   level: {
     type: new DataTypes.STRING(30)
   },

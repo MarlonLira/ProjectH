@@ -43,7 +43,7 @@ export class Crypto {
 
   private static encryptPassword = (password: string) => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-  static compare = (password: string, hash: string): boolean => bcrypt.compareSync(password, hash);
+  static compare = (password: string, hash: string): boolean => hash ? bcrypt.compareSync(password, hash) : false;
 
   static generateRandomPassword = (): string => CryptoJS.randomBytes(5).toString('hex');
 

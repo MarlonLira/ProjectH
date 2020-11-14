@@ -6,6 +6,7 @@ export const TYPES = {
   ILogService: Symbol('ILogService'),
   IDonationService: Symbol('IDonationService'),
   IPointService: Symbol('IPointService'),
+  IRankService: Symbol('IRankService'),
 
   // Repositories Types
   IProductRepository: Symbol('IProductRepository'),
@@ -14,6 +15,8 @@ export const TYPES = {
   ILogRepository: Symbol('ILogRepository'),
   IDonationRepository: Symbol('IDonationRepository'),
   IPointRepository: Symbol('IPointRepository'),
+  IRankRepository: Symbol('IRankRepository'),
 
+  // Consts Types
   IMapper: Symbol('IMapper'),
 };

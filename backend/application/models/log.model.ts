@@ -1,10 +1,11 @@
 import { AutoMap } from "@nartc/automapper";
 import { HttpCode } from "../commons/enums/httpCode";
+import { LogLevel } from "../commons/enums/log-level";
 import { BaseModel } from "./base.model";
 
 export class LogModel extends BaseModel {
   @AutoMap()
-  public level: string;
+  public level: LogLevel;
 
   @AutoMap()
   public message: string;

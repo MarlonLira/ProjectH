@@ -10,6 +10,7 @@ import { CategoryDAO } from '../../../domain/entities/category.entity';
 import { UserDAO } from '../../../domain/entities/user.entity';
 import { PointDAO } from '../../../domain/entities/point.entity';
 import { DonationDAO } from '../../../domain/entities/donation.entity';
+import { RankDAO } from '../../../domain/entities/rank.entity';
 
 const { ForceSync, AlterSync, DropAllTable, IsLogger } = Config.Database;
 
@@ -29,6 +30,7 @@ export class Persistence {
       { name: 'User', entity: UserDAO.sequelize },
       { name: 'Point', entity: PointDAO.sequelize },
       { name: 'Donation', entity: DonationDAO.sequelize },
+      { name: 'Rank', entity: RankDAO.sequelize },
     ];
 
     Logger.Info('Database', 'Table verification started!');
