@@ -44,7 +44,6 @@ import { IMapper } from '../../../application/interfaces/mapper.interface';
 import { IUserService } from '../../../application/interfaces/user-service.interface';
 import { IUserRepository } from '../../../domain/interfaces/user-repository.interface';
 import { ILogService } from '../../../application/interfaces/log-service.interface';
-import { ILogRepository } from '../../../domain/interfaces/log-repository.interface';
 import { IRankService } from '../../../application/interfaces/rank-service.interface';
 import { IRankRepository } from '../../../domain/interfaces/rank-repository.interface';
 

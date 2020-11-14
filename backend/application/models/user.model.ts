@@ -45,9 +45,7 @@ export class UserModel extends BaseModel {
       this.gender = json.gender;
       this.birthday = json.birthday;
       this.score = json.score;
-      json.points.array.forEach(point => {
-        this.points.push(new PointModel(point));
-      });
+      this.points = json.points;
       this.image = json.image;
     }
   }

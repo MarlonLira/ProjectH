@@ -23,7 +23,6 @@ export class EntityToModel extends ProfileBase {
     mapper.createMap(ProductEntity, ProductModel);
     mapper.createMap(CategoryEntity, CategoryModel);
     mapper.createMap(DonationEntity, DonationModel);
-    mapper.createMap(UserEntity, UserModel);
     mapper.createMap(PointEntity, PointModel);
     mapper.createMap(LogEntity, LogModel);
     mapper.createMap(RankEntity, RankModel);
