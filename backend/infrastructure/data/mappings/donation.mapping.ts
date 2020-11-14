@@ -11,12 +11,23 @@ export const DonationMapping: ModelAttributes = {
     allowNull: false
   },
   token: {
-    type: new DataTypes.STRING(10)
+    type: new DataTypes.STRING(10),
+    allowNull: false
   },
   amount: {
-    type: new DataTypes.INTEGER()
+    type: new DataTypes.INTEGER(),
+    allowNull: false
   },
   userId: {
-    type: new DataTypes.INTEGER()
+    type: new DataTypes.INTEGER(),
+    allowNull: false
+  },
+  condition: {
+    type: new DataTypes.STRING(5),
+    allowNull: false
+  },
+  categoryId: {
+    type: new DataTypes.INTEGER(),
+    allowNull: false
   }
 };

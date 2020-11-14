@@ -33,4 +33,4 @@ export class PointEntity extends BaseEntity {
 
 export class PointDAO extends BaseEntityDAO { }
 
-PointDAO.init(PointMapping, { sequelize: _instance, tableName: 'user' });
+PointDAO.init(PointMapping, { sequelize: _instance, tableName: 'point' });

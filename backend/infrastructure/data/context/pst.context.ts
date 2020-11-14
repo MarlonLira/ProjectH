@@ -39,11 +39,15 @@ export class Persistence {
 
     // 1:N - has many
     CategoryDAO.hasMany(ProductDAO, { foreignKey: 'categoryId', as: 'products' });
+    CategoryDAO.hasMany(DonationDAO, { foreignKey: 'categoryId', as: 'donations' });
     UserDAO.hasMany(PointDAO, { foreignKey: 'userId', as: 'points' });
+    UserDAO.hasMany(DonationDAO, { foreignKey: 'userId', as: 'donations' });
 
     // N:1 - belongs to
     ProductDAO.belongsTo(CategoryDAO, { as: 'category' });
     PointDAO.belongsTo(UserDAO, { as: 'user' });
+    DonationDAO.belongsTo(UserDAO, { as: 'user' });
+    DonationDAO.belongsTo(CategoryDAO, { as: 'category' });
 
     // 1:1 - has one
 

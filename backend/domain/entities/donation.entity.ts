@@ -17,6 +17,12 @@ export class DonationEntity extends BaseEntity {
   public userId: number;
 
   @AutoMap()
+  public condition: string;
+
+  @AutoMap()
+  public categoryId: number;
+
+  @AutoMap()
   public id: number;
 
   @AutoMap()
@@ -32,6 +38,8 @@ export class DonationEntity extends BaseEntity {
       this.token = json.token;
       this.amount = json.amount;
       this.userId = json.userId;
+      this.condition = json.condition;
+      this.categoryId = json.categoryId;
       this.id = json.id;
       this.createdAt = json.createdAt;
       this.updatedAt = json.updatedAt;
