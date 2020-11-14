@@ -1,4 +1,5 @@
 import { AutoMap } from "@nartc/automapper";
+import { Json } from "../commons/core/json";
 import { TransactionType } from "../commons/enums/transactionType";
 import { BaseModel } from "./base.model";
 
@@ -19,6 +20,7 @@ export class PointModel extends BaseModel {
   public userId: number;
 
   constructor(json?: any) {
+    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;

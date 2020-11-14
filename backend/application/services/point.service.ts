@@ -10,12 +10,16 @@ import { PointModel } from "../models/Point.model";
 import { HttpCode } from "../commons/enums/httpCode";
 import { ILogService } from "../interfaces/log-service.interface";
 import { HttpMessage } from "../commons/enums/httpMessage";
+import { IUserService } from "../interfaces/user-service.interface";
+import { UserEntity } from "../../domain/entities/user.entity";
+import { UserModel } from "../models/user.model";
 
 @injectable()
 export class PointService implements IPointService {
 
   constructor(
     @inject(TYPES.IPointRepository) private repository: IPointRepository,
+    @inject(TYPES.IUserService) private userService: IUserService,
     @inject(TYPES.IMapper) private mapper: IMapper,
     @inject(TYPES.ILogService) private log: ILogService
   ) { }
@@ -24,8 +28,14 @@ export class PointService implements IPointService {
     return new Promise((resolve, reject) => {
       item.status = TransactionType.ACTIVE;
       this.repository.save(this.mapper.map(item, PointEntity))
-        .then((result) => resolve(this.mapper.map(result, PointModel, PointEntity)))
-        .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
+        .then(async (result) => {
+          const _user = await this.userService.getById(result.userId);
+          _user.score += result.value;
+          await this.userService.update(_user);
+          resolve(result);
+        })
+        .catch(async (error: any) =>
+          reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
   }
 
@@ -33,8 +43,8 @@ export class PointService implements IPointService {
     return new Promise((resolve, reject) => {
       this.repository.update(this.mapper.map(entity, PointEntity, PointModel))
         .then((result) => resolve(result))
-        .catch(async (error: any) => 
-        reject(await this.log.critical('User', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
+        .catch(async (error: any) =>
+          reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
   }
 
@@ -42,7 +52,8 @@ export class PointService implements IPointService {
     return new Promise((resolve, reject) => {
       this.repository.getById(id)
         .then((result) => resolve(result))
-        .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
+        .catch(async (error: any) =>
+          reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
   }
 
@@ -50,7 +61,8 @@ export class PointService implements IPointService {
     return new Promise((resolve, reject) => {
       this.repository.delete(id)
         .then((result) => resolve(result))
-        .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
+        .catch(async (error: any) =>
+          reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
   }
 
@@ -58,7 +70,8 @@ export class PointService implements IPointService {
     return new Promise((resolve, reject) => {
       this.repository.toList()
         .then((result: PointEntity[]) => resolve(result))
-        .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
+        .catch(async (error: any) =>
+          reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
   }
 }

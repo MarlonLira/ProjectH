@@ -12,9 +12,7 @@ export class UserRepository implements IUserRepository {
   getById(id: number): Promise<UserEntity> {
     return new Promise((resolve, reject) => {
       UserDAO.findByPk(id,
-        {
-          include: [{ model: PointDAO, as: 'points' }]
-        }
+        { include: [{ model: PointDAO, as: 'points' }] }
       )
         .then((result: any) => resolve(new UserEntity(result)))
         .catch((error: any) => reject(error));
@@ -40,9 +38,7 @@ export class UserRepository implements IUserRepository {
     return new Promise(async (resolve, reject) => {
       const _transaction = await UserDAO.sequelize.transaction();
       UserDAO.update(item, {
-        where: {
-          id: item.id
-        },
+        where: { id: item.id },
         transaction: _transaction,
         validate: false
       })
