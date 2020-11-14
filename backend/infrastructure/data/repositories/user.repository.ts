@@ -1,11 +1,25 @@
 import { injectable } from "inversify";
 import { Op } from "sequelize";
+import { Json } from "../../../application/commons/core/json";
 import { TransactionType } from "../../../application/commons/enums/transactionType";
+import { PointDAO } from "../../../domain/entities/point.entity";
 import { UserDAO, UserEntity } from "../../../domain/entities/user.entity";
 import { IUserRepository } from "../../../domain/interfaces/user-repository.interface";
 
 @injectable()
 export class UserRepository implements IUserRepository {
+
+  getById(id: number): Promise<UserEntity> {
+    return new Promise((resolve, reject) => {
+      UserDAO.findByPk(id,
+        {
+          include: [{ model: PointDAO, as: 'points' }]
+        }
+      )
+        .then((result: any) => resolve(new UserEntity(Json.parse(result))))
+        .catch((error: any) => reject(error));
+    });
+  }
 
   save(item: UserEntity): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {

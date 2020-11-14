@@ -1,3 +1,3 @@
 export class Json {
-  static parse = (value: any) => Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : value.toJSON();
+  static parse = (value: any) => JSON.parse(JSON.stringify(value));
 }

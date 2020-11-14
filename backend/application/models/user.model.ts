@@ -28,7 +28,7 @@ export class UserModel extends BaseModel {
   @AutoMap()
   public score: number;
 
-  @AutoMap()
+  @AutoMap(() => PointModel)
   public points: PointModel[];
 
   @AutoMap()
@@ -45,7 +45,9 @@ export class UserModel extends BaseModel {
       this.gender = json.gender;
       this.birthday = json.birthday;
       this.score = json.score;
-      this.points = json.points;
+      json.points.array.forEach(point => {
+        this.points.push(new PointModel(point));
+      });
       this.image = json.image;
     }
   }

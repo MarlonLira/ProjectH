@@ -10,16 +10,16 @@ export const LogMapping: ModelAttributes = {
     type: new DataTypes.STRING(30)
   },
   message: {
-    type: new DataTypes.STRING(30)
+    type: new DataTypes.STRING(255)
   },
   source: {
-    type: new DataTypes.STRING(30)
+    type: new DataTypes.STRING(255)
   },
   code: {
     type: new DataTypes.STRING(30)
   },
   obj: {
-    type: new DataTypes.STRING(30)
+    type: new DataTypes.STRING(255)
   },
   userId: {
     type: new DataTypes.INTEGER()
