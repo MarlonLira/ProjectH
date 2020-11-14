@@ -47,7 +47,7 @@ export class Crypto {
 
   static generateRandomPassword = (): string => CryptoJS.randomBytes(5).toString('hex');
 
-  static randomPassword(): string {
+  static randomToken(): string {
     let text = "";
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

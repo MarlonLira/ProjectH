@@ -7,6 +7,7 @@ import { TransactionType } from "../commons/enums/transactionType";
 import { IDonationService } from "../interfaces/donation-service.interface";
 import { IMapper } from "../interfaces/mapper.interface";
 import { DonationModel } from "../models/donation.model";
+import { Crypto } from "../commons/core/crypto";
 
 @injectable()
 export class DonationService implements IDonationService {
@@ -19,6 +20,7 @@ export class DonationService implements IDonationService {
   save(item: DonationModel): Promise<DonationModel> {
     return new Promise((resolve, reject) => {
       item.status = TransactionType.ACTIVE;
+      item.token = Crypto.randomToken();
       this.repository.save(this.mapper.map(item, DonationEntity))
         .then((result) => resolve(this.mapper.map(result, DonationModel, DonationEntity)))
         .catch(async (error: any) => reject(console.log(InnerException.decode(error))));
