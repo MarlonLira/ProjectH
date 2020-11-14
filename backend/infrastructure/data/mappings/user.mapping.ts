@@ -33,6 +33,9 @@ export const UserMapping: ModelAttributes = {
   birthday: {
     type: new DataTypes.DATE()
   },
+  score: {
+    type: new DataTypes.DOUBLE()
+  },
   image: {
     type: new DataTypes.BLOB("medium"),
     get() {

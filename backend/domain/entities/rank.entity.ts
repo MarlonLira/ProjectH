@@ -1,0 +1,28 @@
+import { AutoMap } from '@nartc/automapper';
+import { TransactionType } from "../../application/commons/enums/transactionType";
+import { RankMapping } from '../../infrastructure/data/mappings/rank.mapping';
+import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
+
+export class RankEntity extends BaseEntity {
+  @AutoMap()
+  public status: TransactionType;
+
+  @AutoMap()
+  public name: string;
+
+  @AutoMap()
+  public score: number;
+
+  constructor(json?: any) {
+    super(json);
+    if (json) {
+      this.status = json.status;
+      this.name = json.name;
+      this.score = json.score;
+    }
+  }
+}
+
+export class RankDAO extends BaseEntityDAO { }
+
+RankDAO.init(RankMapping, { sequelize: _instance, tableName: 'rank' });
