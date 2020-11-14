@@ -1,5 +1,6 @@
 import { AutoMap } from '@nartc/automapper';
 import { Model } from 'sequelize';
+import { Json } from '../../application/commons/core/json';
 import { Context } from '../../infrastructure/data/context/db.context';
 
 export const _instance = Context.getInstance();

@@ -37,6 +37,7 @@ export class UserEntity extends BaseEntity {
   public image: any;
 
   constructor(json?: any) {
+    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;

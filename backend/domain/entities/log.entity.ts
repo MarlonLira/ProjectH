@@ -1,4 +1,5 @@
 import { AutoMap } from "@nartc/automapper";
+import { Json } from "../../application/commons/core/json";
 import { HttpCode } from "../../application/commons/enums/httpCode";
 import { LogLevel } from "../../application/commons/enums/log-level";
 import { LogMapping } from "../../infrastructure/data/mappings/log.mapping";
@@ -27,6 +28,7 @@ export class LogEntity extends BaseEntity {
   isRecord: boolean;
 
   constructor(json?: any) {
+    json = Json.parse(json);
     super(json);
     if (json) {
       this.level = json.level;

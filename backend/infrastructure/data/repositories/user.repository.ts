@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository {
           include: [{ model: PointDAO, as: 'points' }]
         }
       )
-        .then((result: any) => resolve(new UserEntity(Json.parse(result))))
+        .then((result: any) => resolve(new UserEntity(result)))
         .catch((error: any) => reject(error));
     });
   }

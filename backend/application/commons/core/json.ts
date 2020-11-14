@@ -1,3 +1,5 @@
+import { Attributes } from "./attributes"
+
 export class Json {
-  static parse = (value: any) => JSON.parse(JSON.stringify(value));
+  static parse = (value: any) => value ? JSON.parse(JSON.stringify(value)) : value;
 }
