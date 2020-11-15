@@ -2,7 +2,9 @@ import { AutoMap } from '@nartc/automapper';
 import { Json } from '../../application/commons/core/json';
 import { TransactionType } from "../../application/commons/enums/transactionType";
 import { UserMapping } from '../../infrastructure/data/mappings/user.mapping';
+import { AddressEntity } from './address.entity';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
+import { DonationEntity } from './donation.entity';
 import { PointEntity } from './point.entity';
 
 export class UserEntity extends BaseEntity {
@@ -30,11 +32,17 @@ export class UserEntity extends BaseEntity {
   @AutoMap()
   public score: number;
 
+  @AutoMap()
+  public image: any;
+
   @AutoMap(() => PointEntity)
   public points: PointEntity[];
 
-  @AutoMap()
-  public image: any;
+  @AutoMap(() => DonationEntity)
+  public donations: DonationEntity[];
+
+  @AutoMap(() => AddressEntity)
+  public address: AddressEntity;
 
   constructor(json?: any) {
     json = Json.parse(json);
@@ -50,6 +58,8 @@ export class UserEntity extends BaseEntity {
       this.score = json.score;
       this.image = json.image;
       this.points = json.points;
+      this.donations = json.donations;
+      this.address = json.address;
     }
   }
 }

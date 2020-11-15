@@ -27,7 +27,7 @@ export class UserService implements IUserService {
   getById(id: number): Promise<UserModel> {
     return new Promise((resolve, reject) => {
       this.repository.getById(id)
-        .then((result: any) => resolve(this.mapper.map(result, UserModel)))
+        .then((result: UserEntity) => resolve(this.mapper.map(result, UserModel)))
         .catch(async (error: any) =>
           reject(await this.log.critical('User', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });

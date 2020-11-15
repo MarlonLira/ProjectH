@@ -15,6 +15,8 @@ import { ProductModel } from '../models/product.model';
 import { DonationModel } from '../models/donation.model';
 import { RankModel } from '../models/rank.model';
 import { UserModel } from '../models/user.model';
+import { AddressModel } from '../models/address.model';
+import { AddressEntity } from '../../domain/entities/address.entity';
 
 export class EntityToModel extends ProfileBase {
   constructor(mapper: AutoMapper) {
@@ -26,9 +28,14 @@ export class EntityToModel extends ProfileBase {
     mapper.createMap(PointEntity, PointModel);
     mapper.createMap(LogEntity, LogModel);
     mapper.createMap(RankEntity, RankModel);
+    mapper.createMap(AddressEntity, AddressModel);
 
     mapper.createMap(UserEntity, UserModel)
       .forMember(dest => dest.points,
-        mapWith(PointModel, src => src.points, () => PointEntity));
+        mapWith(PointModel, src => src.points, () => PointEntity))
+      .forMember(dest => dest.donations,
+        mapWith(DonationModel, src => src.donations, () => DonationEntity))
+      .forMember(dest => dest.address,
+        mapWith(AddressModel, src => src.address, () => AddressEntity))
   }
 }
