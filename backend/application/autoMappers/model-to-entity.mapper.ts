@@ -12,7 +12,7 @@ import { AddressModel } from '../models/address.model';
 import { BaseModel } from '../models/base.model';
 import { CategoryModel } from '../models/category.model';
 import { DonationModel } from '../models/donation.model';
-import { LogModel } from '../Models/log.model';
+import { LogModel } from '../models/log.model';
 import { PointModel } from '../models/point.model';
 import { ProductModel } from '../models/product.model';
 import { RankModel } from '../models/rank.model';

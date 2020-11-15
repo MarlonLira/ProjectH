@@ -1,6 +1,6 @@
 import { HttpCode } from "../commons/enums/httpCode";
 import { LogLevel } from "../commons/enums/log-level";
-import { LogModel } from "../Models/log.model";
+import { LogModel } from "../models/log.model";
 
 export interface ILogService {
   save(log: LogModel): Promise<any>;

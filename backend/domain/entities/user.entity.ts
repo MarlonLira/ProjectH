@@ -6,6 +6,7 @@ import { AddressEntity } from './address.entity';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
 import { DonationEntity } from './donation.entity';
 import { PointEntity } from './point.entity';
+import { RankEntity } from './rank.entity';
 
 export class UserEntity extends BaseEntity {
   @AutoMap()
@@ -44,6 +45,9 @@ export class UserEntity extends BaseEntity {
   @AutoMap(() => AddressEntity)
   public address: AddressEntity;
 
+  @AutoMap(() => RankEntity)
+  public rank: RankEntity;
+
   constructor(json?: any) {
     json = Json.parse(json);
     super(json);
@@ -60,6 +64,7 @@ export class UserEntity extends BaseEntity {
       this.points = json.points;
       this.donations = json.donations;
       this.address = json.address;
+      this.rank = json.rank;
     }
   }
 }

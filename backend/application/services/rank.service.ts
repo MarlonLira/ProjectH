@@ -21,7 +21,8 @@ export class RankService implements IRankService {
 
   getByScore(score: number): Promise<RankModel> {
     return new Promise((resolve, reject) => {
-      this.repository.getByScore(score)
+      const _score = score ? score : 0;
+      this.repository.getByScore(_score)
         .then((result: RankEntity) => resolve(this.mapper.map(result, RankModel)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Rank', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));

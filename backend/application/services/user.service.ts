@@ -1,6 +1,5 @@
 import { AutoMapper } from "@nartc/automapper";
 import { inject, injectable } from "inversify";
-import { ProductEntity } from "../../domain/entities/product.entity";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { IUserRepository } from "../../domain/interfaces/user-repository.interface";
 import { TYPES } from "../../infrastructure/crosscutting/ioc/types";
@@ -12,6 +11,7 @@ import { HttpCode } from "../commons/enums/httpCode";
 import { HttpMessage } from "../commons/enums/httpMessage";
 import { TransactionType } from "../commons/enums/transactionType";
 import { ILogService } from "../interfaces/log-service.interface";
+import { IRankService } from "../interfaces/rank-service.interface";
 import { IUserService } from "../interfaces/user-service.interface";
 import { UserModel } from "../models/user.model";
 
@@ -20,6 +20,7 @@ export class UserService implements IUserService {
 
   constructor(
     @inject(TYPES.IUserRepository) private repository: IUserRepository,
+    @inject(TYPES.IRankService) private rankService: IRankService,
     @inject(TYPES.IMapper) private mapper: AutoMapper,
     @inject(TYPES.ILogService) private log: ILogService
   ) { }
@@ -27,7 +28,12 @@ export class UserService implements IUserService {
   getById(id: number): Promise<UserModel> {
     return new Promise((resolve, reject) => {
       this.repository.getById(id)
-        .then((result: UserEntity) => resolve(this.mapper.map(result, UserModel)))
+        .then(async (result: UserEntity) => {
+          const _result = this.mapper.map(result, UserModel);
+          const _rank = await this.rankService.getByScore(_result.score);
+          _result.rank = _rank;
+          resolve(_result);
+        })
         .catch(async (error: any) =>
           reject(await this.log.critical('User', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });

@@ -1,7 +1,7 @@
 import { dateTimeNow } from "./innerDate";
 import * as clc from 'cli-color';
 import { LogLevel } from "../enums/log-level";
-import { LogModel } from "../../Models/log.model";
+import { LogModel } from "../../models/log.model";
 
 const error = clc.red.bold;
 const warn = clc.yellow.bold;
@@ -44,17 +44,17 @@ export class Logger {
   static Default(log: LogModel | any) {
     switch (log.level) {
       case LogLevel.ERROR:
-        return Logger.Error(log.source, log.message);
+        return Logger.Error(log.source, log.obj);
       case LogLevel.WARNING:
-        return Logger.Warn(log.source, log.message);
+        return Logger.Warn(log.source, log.obj);
       case LogLevel.CRITICAL:
-        return Logger.Critical(log.source, log.message);
+        return Logger.Critical(log.source, log.obj);
       case LogLevel.UNKNOWN:
-        return Logger.Unknown(log.source, log.message);
+        return Logger.Unknown(log.source, log.obj);
       case LogLevel.INFO:
-        return Logger.Info(log.source, log.message);
+        return Logger.Info(log.source, log.obj);
       default:
-        return Logger.Unknown(log.source, log.message);
+        return Logger.Unknown(log.source, log.obj);
     }
   }
 }

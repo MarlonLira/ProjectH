@@ -4,6 +4,7 @@ import { AddressModel } from "./address.model";
 import { BaseModel } from "./base.model";
 import { DonationModel } from "./donation.model";
 import { PointModel } from "./point.model";
+import { RankModel } from "./rank.model";
 
 export class UserModel extends BaseModel {
   @AutoMap()
@@ -42,6 +43,9 @@ export class UserModel extends BaseModel {
   @AutoMap(() => AddressModel)
   public address: AddressModel;
 
+  @AutoMap(() => RankModel)
+  public rank: RankModel;
+
   constructor(json?: any) {
     super(json);
     if (json) {
@@ -57,6 +61,7 @@ export class UserModel extends BaseModel {
       this.points = json.points;
       this.donations = json.donations;
       this.address = json.address;
+      this.rank = json.rank;
     }
   }
 }
