@@ -20,7 +20,6 @@ export class PointModel extends BaseModel {
   public userId: number;
 
   constructor(json?: any) {
-    json = Json.parse(json);
     super(json);
     if (json) {
       this.status = json.status;

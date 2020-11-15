@@ -23,13 +23,12 @@ export class DonationService implements IDonationService {
 
   save(item: DonationModel): Promise<DonationModel> {
     return new Promise((resolve, reject) => {
-      item.status = TransactionType.ACTIVE;
+      item.status = TransactionType.PENDING;
       item.token = Crypto.randomToken(9);
       this.repository.save(this.mapper.map(item, DonationEntity))
         .then((result) => resolve(this.mapper.map(result, DonationModel, DonationEntity)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Donation', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
-
     });
   }
 
@@ -39,7 +38,6 @@ export class DonationService implements IDonationService {
         .then((result) => resolve(result))
         .catch(async (error: any) =>
           reject(await this.log.critical('Donation', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
-
     });
   }
 
@@ -49,7 +47,6 @@ export class DonationService implements IDonationService {
         .then((result) => resolve(this.mapper.map(result, DonationModel, DonationEntity)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Donation', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
-
     });
   }
 
@@ -59,7 +56,6 @@ export class DonationService implements IDonationService {
         .then((result) => resolve(result))
         .catch(async (error: any) =>
           reject(await this.log.critical('Donation', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
-
     });
   }
 
@@ -69,7 +65,6 @@ export class DonationService implements IDonationService {
         .then((result: DonationEntity[]) => resolve(this.mapper.mapArray(result, DonationModel, DonationEntity)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Donation', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
-
     });
   }
 }

@@ -27,10 +27,11 @@ export class PointService implements IPointService {
       item.status = TransactionType.ACTIVE;
       this.repository.save(this.mapper.map(item, PointEntity))
         .then(async (result) => {
-          const _user = await this.userService.getById(result.userId);
+          const _result = this.mapper.map(result, PointEntity, PointModel);
+          const _user = await this.userService.getById(_result.userId);
           _user.score += result.value;
           await this.userService.update(_user);
-          resolve(result);
+          resolve(_result);
         })
         .catch(async (error: any) =>
           reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
@@ -49,7 +50,7 @@ export class PointService implements IPointService {
   getById(id: number): Promise<PointModel> {
     return new Promise((resolve, reject) => {
       this.repository.getById(id)
-        .then((result) => resolve(result))
+        .then((result) => resolve(this.mapper.map(result, PointEntity, PointModel)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });
@@ -67,7 +68,7 @@ export class PointService implements IPointService {
   toList(): Promise<PointModel[]> {
     return new Promise((resolve, reject) => {
       this.repository.toList()
-        .then((result: PointEntity[]) => resolve(result))
+        .then((result: PointEntity[]) => resolve(this.mapper.mapArray(result, PointEntity, PointModel)))
         .catch(async (error: any) =>
           reject(await this.log.critical('Point', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
     });

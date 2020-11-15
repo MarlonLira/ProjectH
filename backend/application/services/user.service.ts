@@ -1,6 +1,5 @@
 import { AutoMapper } from "@nartc/automapper";
 import { inject, injectable } from "inversify";
-import { ProductEntity } from "../../domain/entities/product.entity";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { IUserRepository } from "../../domain/interfaces/user-repository.interface";
 import { TYPES } from "../../infrastructure/crosscutting/ioc/types";
