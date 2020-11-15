@@ -48,12 +48,15 @@ const Auth: React.FC<Props> = (props) => {
   }, [])
 
   const signUp = async (json: User) => {
+    setLoadingLogin(true);
     try {
       const response = await api.post('/user', json);
       setUser(response.data.result);
       insertUser(response.data.result);
+      setLoadingLogin(false);
     } catch (error) {
-      alert(error.message);
+      alert(error.response.data.message);
+      setLoadingLogin(false);
     }
   }
 
@@ -73,7 +76,7 @@ const Auth: React.FC<Props> = (props) => {
       setLoadingLogin(false);
     } catch (error) {
       setLoadingLogin(false);
-      alert(error.message);
+      alert(error.response.data.message);
     }
   }
 

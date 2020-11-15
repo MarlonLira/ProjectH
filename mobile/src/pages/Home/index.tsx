@@ -59,6 +59,38 @@ const Home: React.FC = () => {
             >
               <Image source={require('../../images/logo_red_icon.png')} />
             </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.034363,
+                longitude: -34.912431,
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')} />
+            </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.056459,
+                longitude: -34.886682
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')}/>
+            </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.060878,
+                longitude: -34.883592
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')} />
+            </Marker>
+
+             
           </MapView>
         </View>
       </View>

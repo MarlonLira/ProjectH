@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
+import React, { useState, useEffect, useContext, } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Switch, ActivityIndicator } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
 import { AuthContext, ContextProps } from '../../contexts/auth';
 import api from '../../services/api';
-
 import Input from '../../components/Input';
 import Buttom from '../../components/Button';
 import ButtonGoBack from '../../components/ButtonGoBack';
@@ -38,6 +37,8 @@ const Donation: React.FC = () => {
   const [token, setToken] = useState('');
   const [data, setData] = useState([]);
   const [validade, setValidade] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [vlidateAdress, setValidateAddress] = useState(false);
 
   useEffect(() => {
     async function getCategories() {
@@ -54,13 +55,31 @@ const Donation: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (amount != '' && condition != '' && category != '' && isEnabled || isEnabledHome) {
+    async function getAddress() {
+      try {
+        const response = await api.get(`/user/${user.id}`);
+
+        if (response.data.result.address == null) {
+          setValidateAddress(true);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.log(error.response.data.message);
+        setLoading(false);
+      }
+    }
+    getAddress();
+  }, [])
+
+  useEffect(() => {
+    if (amount != '' && condition != '' && category != '' && (isEnabled || isEnabledHome)) {
       setValidade(false);
     } else {
       setValidade(true);
     }
   }, [amount, condition, category, isEnabled, isEnabledHome]);
-
+ 
   const handleButton = async () => {
     setVisible(true);
 
@@ -91,6 +110,11 @@ const Donation: React.FC = () => {
     navigation.dispatch(StackActions.popToTop());
   };
 
+  const hideDialogAddress = () => {
+    setValidateAddress(false);
+    navigation.navigate('Address');
+  };
+
   const RenderDisplayDialog = () => {
 
     return (
@@ -103,6 +127,24 @@ const Donation: React.FC = () => {
             <Text style={styles.textToken}>{token}</Text>
           </View>
           <TouchableOpacity style={styles.ok} activeOpacity={0.5} onPress={hideDialog}>
+            <Text style={styles.textSign}>OK</Text>
+          </TouchableOpacity>
+        </Dialog.Container>
+      </View>
+    );
+  };
+
+  const RenderDisplayDialogAddress = () => {
+
+    return (
+      <View style={{ alignItems: "center" }}>
+        <Dialog.Container visible={vlidateAdress} >
+         <Dialog.Title>Ops... Verificamos que você ainda não tem endereço cadastrado.</Dialog.Title> 
+          <Dialog.Description>Vamos realizar o cadastro? O endereço é uma informação essencial para a coleta em sua residência.</Dialog.Description>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.textToken}>{token}</Text>
+          </View>
+          <TouchableOpacity style={styles.ok} activeOpacity={0.5} onPress={hideDialogAddress}>
             <Text style={styles.textSign}>OK</Text>
           </TouchableOpacity>
         </Dialog.Container>
@@ -135,67 +177,74 @@ const Donation: React.FC = () => {
 
       <CustomProgressBar visible={visible} />
       <RenderDisplayDialog />
+      <RenderDisplayDialogAddress />
       <ButtonGoBack onPress={() => navigation.goBack()} />
 
-      <ScrollView style={styles.container} >
-
-        <View style={{ alignItems: "center", marginTop: -80 }} >
-          <Lottie source={Animate} autoPlay loop autoSize resizeMode="contain" style={{ width: 400, height: 300 }} />
+      {loading ?
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#000" />
         </View>
+        :
+        <ScrollView style={styles.container} >
 
-        <View>
-          <Input
-            label="Quantidade"
-            placeholder="Total de peças"
-            onChangeText={text => setAmount(text)}
-          />
-
-          <View style={styles.category}>
-            <Text style={styles.labelPicker}>Condição</Text>
-            <Picker
-              selectedValue={condition}
-              onValueChange={(itemValue, itemIndex) => setCondition(itemValue.toString())}
-              mode='dialog'
-              style={styles.picker}
-            >
-              <Picker.Item value={""} label="" />
-              <Picker.Item value={"RE"} label="Reciclável" />
-              <Picker.Item value={"US"} label="Usável" />
-            </Picker>
+          <View style={{ alignItems: "center", marginTop: -80 }} >
+            <Lottie source={Animate} autoPlay loop autoSize resizeMode="contain" style={{ width: 400, height: 300 }} />
           </View>
 
-          <RenderPickerCategories />
-
-          <View style={styles.access}>
-            <Switch
-              trackColor={{ false: "#767577", true: "#9EE5DD" }}
-              thumbColor={isEnabled ? "#5ED4C6" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+          <View>
+            <Input
+              label="Quantidade"
+              placeholder="Total de peças"
+              onChangeText={text => setAmount(text)}
             />
-            <Text>Deixarei em um ponto de coleta</Text>
-          </View>
 
-          <View style={styles.access}>
-            <Switch
-              trackColor={{ false: "#767577", true: "#9EE5DD" }}
-              thumbColor={isEnabledHome ? "#5ED4C6" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchHome}
-              value={isEnabledHome}
+            <View style={styles.category}>
+              <Text style={styles.labelPicker}>Condição</Text>
+              <Picker
+                selectedValue={condition}
+                onValueChange={(itemValue, itemIndex) => setCondition(itemValue.toString())}
+                mode='dialog'
+                style={styles.picker}
+              >
+                <Picker.Item value={""} label="" />
+                <Picker.Item value={"RE"} label="Reciclável" />
+                <Picker.Item value={"US"} label="Usável" />
+              </Picker>
+            </View>
+
+            <RenderPickerCategories />
+
+            <View style={styles.access}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#9EE5DD" }}
+                thumbColor={isEnabled ? "#5ED4C6" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+              <Text>Deixarei em um ponto de coleta</Text>
+            </View>
+
+            <View style={styles.access}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#9EE5DD" }}
+                thumbColor={isEnabledHome ? "#5ED4C6" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchHome}
+                value={isEnabledHome}
+              />
+              <Text>Preciso que busquem em meu endereço</Text>
+            </View>
+
+            <Buttom
+              onPress={handleButton}
+              text="Solicitar"
+              disabled={validade}
             />
-            <Text>Preciso que busquem em meu endereço</Text>
+
           </View>
-
-          <Buttom
-            onPress={handleButton}
-            text="Solicitar"
-            disabled={validade}
-          />
-
-        </View>
-      </ScrollView>
+        </ScrollView>
+      }
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, SafeAreaView, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Input from '../../components/Input';
 import Buttom from '../../components/Button';
@@ -35,18 +35,22 @@ const Login = () => {
           <ActivityIndicator size="large" color="#000" />
         </View> 
         :
-        <ScrollView style={styles.scroll}>
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+
+          <Image source={require('../../images/logoLarge.png')} style={{ width: 200, height: 150 }}/>
+
           <Text style={styles.title}>Olá :)</Text>
           <Text style={styles.subTitle}>Acesse sua conta.</Text>
 
           <View>
             <Input
-              placeholder="Insira seu e-mail"
+              placeholder="E-mail"
               onChangeText={text => setEmail(text)}
             />
             <Input
-              placeholder="Digite sua senha"
+              placeholder="Senha"
               onChangeText={text => setPassword(text)}
+              secureTextEntry={true}
             />
             <Buttom
               text="Entrar"

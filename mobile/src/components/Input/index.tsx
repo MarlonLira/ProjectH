@@ -8,6 +8,7 @@ export interface Props {
   maxLength?: number;
   secureTextEntry?: boolean;
   label?: string;
+  value?: string;
 }
 
 const Input: React.FC<Props> = (props) => {
@@ -22,6 +23,8 @@ const Input: React.FC<Props> = (props) => {
         onEndEditing={props.onEndEditing}
         maxLength={props.maxLength}
         style={styles.text}
+        secureTextEntry={props.secureTextEntry}
+        value={props.value}
       />
     </View>
   );
