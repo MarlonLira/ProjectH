@@ -1,4 +1,5 @@
 import { AutoMap } from '@nartc/automapper';
+import { ConditionType } from '../../application/commons/enums/conditionType';
 import { TransactionType } from "../../application/commons/enums/transactionType";
 import { DonationMapping } from '../../infrastructure/data/mappings/donation.mapping';
 import { BaseEntity, BaseEntityDAO, _instance } from './base.entity';
@@ -17,19 +18,10 @@ export class DonationEntity extends BaseEntity {
   public userId: number;
 
   @AutoMap()
-  public condition: string;
+  public condition: ConditionType;
 
   @AutoMap()
   public categoryId: number;
-
-  @AutoMap()
-  public id: number;
-
-  @AutoMap()
-  public createdAt: Date;
-
-  @AutoMap()
-  public updatedAt: Date; 
 
   constructor(json?: any) {
     super(json);
@@ -40,9 +32,6 @@ export class DonationEntity extends BaseEntity {
       this.userId = json.userId;
       this.condition = json.condition;
       this.categoryId = json.categoryId;
-      this.id = json.id;
-      this.createdAt = json.createdAt;
-      this.updatedAt = json.updatedAt;
     }
   }
 }
