@@ -6,13 +6,11 @@ import { InnerException } from "../commons/core/innerException";
 import { TransactionType } from "../commons/enums/transactionType";
 import { IPointService } from "../interfaces/point-service.interface";
 import { IMapper } from "../interfaces/mapper.interface";
-import { PointModel } from "../models/Point.model";
+import { PointModel } from "../models/point.model";
 import { HttpCode } from "../commons/enums/httpCode";
 import { ILogService } from "../interfaces/log-service.interface";
 import { HttpMessage } from "../commons/enums/httpMessage";
 import { IUserService } from "../interfaces/user-service.interface";
-import { UserEntity } from "../../domain/entities/user.entity";
-import { UserModel } from "../models/user.model";
 
 @injectable()
 export class PointService implements IPointService {

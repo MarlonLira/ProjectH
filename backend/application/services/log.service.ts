@@ -6,7 +6,7 @@ import { Logger } from "../commons/core/logger";
 import { HttpCode } from "../commons/enums/httpCode";
 import { LogLevel } from "../commons/enums/log-level";
 import { ILogService } from "../interfaces/log-service.interface";
-import { LogModel } from "../Models/log.model";
+import { LogModel } from "../models/log.model";
 import { LogEntity } from "../../domain/entities/log.entity";
 import * as Config from '../../presentation/config.json';
 

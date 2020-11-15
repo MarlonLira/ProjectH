@@ -1,7 +1,7 @@
 import { dateTimeNow } from "./innerDate";
 import * as clc from 'cli-color';
 import { LogLevel } from "../enums/log-level";
-import { LogModel } from "../../Models/log.model";
+import { LogModel } from "../../models/log.model";
 
 const error = clc.red.bold;
 const warn = clc.yellow.bold;
