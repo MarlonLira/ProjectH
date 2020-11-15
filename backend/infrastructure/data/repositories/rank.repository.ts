@@ -11,8 +11,8 @@ export class RankRepository implements IRankRepository {
     return new Promise((resolve, reject) => {
       RankDAO.findOne({
         where: {
-          maxScore: { [Op.gt]: score },
-          minScore: { [Op.lt]: score },
+          maxScore: { [Op.gte]: score },
+          minScore: { [Op.lte]: score },
           status: { [Op.ne]: TransactionType.DELETED }
         }
       })
