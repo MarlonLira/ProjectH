@@ -1,4 +1,4 @@
-import { AutoMapper, Mapper } from "@nartc/automapper";
+import { AutoMapper } from "@nartc/automapper";
 import { inject, injectable } from "inversify";
 import { ProductEntity } from "../../domain/entities/product.entity";
 import { IProductRepository } from "../../domain/interfaces/product-repository.interface";

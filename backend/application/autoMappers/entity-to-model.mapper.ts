@@ -9,7 +9,7 @@ import { RankEntity } from '../../domain/entities/rank.entity';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { BaseModel } from '../models/base.model';
 import { CategoryModel } from '../models/category.model';
-import { LogModel } from '../Models/log.model';
+import { LogModel } from '../models/log.model';
 import { PointModel } from '../models/point.model';
 import { ProductModel } from '../models/product.model';
 import { DonationModel } from '../models/donation.model';

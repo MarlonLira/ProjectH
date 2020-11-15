@@ -1,6 +1,6 @@
 import { Mapper } from '@nartc/automapper'
-import { EntityToModel } from './entity-to-model.Mapper';
-import { ModelToEntity } from './model-to-entity.Mapper';
+import { EntityToModel } from './entity-to-model.mapper';
+import { ModelToEntity } from './model-to-entity.mapper';
 
 Mapper.addProfile(EntityToModel);
 Mapper.addProfile(ModelToEntity);

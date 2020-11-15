@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-
 // Types
 import { TYPES } from './types';
 
@@ -27,7 +26,7 @@ import { IUserRepository } from '../../../domain/interfaces/user-repository.inte
 import { ProductService } from '../../../application/services/product.service';
 import { CategoryService } from '../../../application/services/category.service';
 import { UserService } from '../../../application/services/user.service';
-import { LogService } from '../../../application/services/LOG.service';
+import { LogService } from '../../../application/services/log.service';
 import { DonationService } from '../../../application/services/donation.service';
 import { PointService } from '../../../application/services/point.service';
 import { RankService } from '../../../application/services/rank.service';
