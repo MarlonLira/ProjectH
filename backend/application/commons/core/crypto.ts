@@ -47,13 +47,22 @@ export class Crypto {
 
   static generateRandomPassword = (): string => CryptoJS.randomBytes(5).toString('hex');
 
-  static randomToken(): string {
+  static randomToken(length: number): string {
     let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let count = Math.round(length/3);
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+    const withSymbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@!%&*";
 
-    for (let i = 0; i < 8; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (let i = 0; i < count; i++)
+      text += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
 
-    return text;
+    for (let i = 0; i < count; i++)
+      text += numbers.charAt(Math.floor(Math.random() * numbers.length));
+
+    for (let i = 0; i < count; i++)
+      text += withSymbols.charAt(Math.floor(Math.random() * withSymbols.length));
+
+    return text.toUpperCase();
   }
 }

@@ -20,7 +20,7 @@ export class DonationService implements IDonationService {
   save(item: DonationModel): Promise<DonationModel> {
     return new Promise((resolve, reject) => {
       item.status = TransactionType.ACTIVE;
-      item.token = Crypto.randomToken();
+      item.token = Crypto.randomToken(9);
       this.repository.save(this.mapper.map(item, DonationEntity))
         .then((result) => resolve(this.mapper.map(result, DonationModel, DonationEntity)))
         .catch(async (error: any) => reject(console.log(InnerException.decode(error))));

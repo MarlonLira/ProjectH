@@ -1,4 +1,5 @@
 import { AutoMapper, ProfileBase } from '@nartc/automapper';
+import { AddressEntity } from '../../domain/entities/address.entity';
 import { BaseEntity } from '../../domain/entities/base.entity';
 import { CategoryEntity } from '../../domain/entities/category.entity';
 import { DonationEntity } from '../../domain/entities/donation.entity';
@@ -7,6 +8,7 @@ import { PointEntity } from '../../domain/entities/point.entity';
 import { ProductEntity } from '../../domain/entities/product.entity';
 import { RankEntity } from '../../domain/entities/rank.entity';
 import { UserEntity } from '../../domain/entities/user.entity';
+import { AddressModel } from '../models/address.model';
 import { BaseModel } from '../models/base.model';
 import { CategoryModel } from '../models/category.model';
 import { DonationModel } from '../models/donation.model';
@@ -27,5 +29,6 @@ export class ModelToEntity extends ProfileBase {
     mapper.createMap(PointModel, PointEntity);
     mapper.createMap(LogModel, LogEntity);
     mapper.createMap(RankModel, RankEntity);
+    mapper.createMap(AddressModel, AddressEntity);
   }
 }

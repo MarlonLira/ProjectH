@@ -11,6 +11,7 @@ import { UserDAO } from '../../../domain/entities/user.entity';
 import { PointDAO } from '../../../domain/entities/point.entity';
 import { DonationDAO } from '../../../domain/entities/donation.entity';
 import { RankDAO } from '../../../domain/entities/rank.entity';
+import { AddressDAO } from '../../../domain/entities/address.entity';
 
 const { ForceSync, AlterSync, DropAllTable, IsLogger } = Config.Database;
 
@@ -31,6 +32,7 @@ export class Persistence {
       { name: 'Point', entity: PointDAO.sequelize },
       { name: 'Donation', entity: DonationDAO.sequelize },
       { name: 'Rank', entity: RankDAO.sequelize },
+      { name: 'Address', entity: AddressDAO.sequelize },
     ];
 
     Logger.Info('Database', 'Table verification started!');
@@ -50,8 +52,10 @@ export class Persistence {
     PointDAO.belongsTo(UserDAO, { as: 'user' });
     DonationDAO.belongsTo(UserDAO, { as: 'user' });
     DonationDAO.belongsTo(CategoryDAO, { as: 'category' });
+    AddressDAO.belongsTo(UserDAO, { as: 'user' });
 
     // 1:1 - has one
+    UserDAO.hasOne(AddressDAO, { foreignKey: 'userId', as: 'address' });
 
     /* #endregion */
     this.checkAndBuild(models)
