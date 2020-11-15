@@ -16,10 +16,21 @@ export interface User {
   gender: string;
 }
 
+export interface ContextProps {
+  signed: boolean;
+  user: any;
+  loading: boolean; 
+  signUp: any;
+  signIn: any;
+  signOut: any;
+  loadingLogin: any
+}
+
 const Auth: React.FC<Props> = (props) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingLogin, setLoadingLogin] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -48,6 +59,8 @@ const Auth: React.FC<Props> = (props) => {
 
   const signIn = async (email: string, password: string) => {
 
+    setLoadingLogin(true);
+
     let data = {
       email: email,
       password: password,
@@ -57,7 +70,9 @@ const Auth: React.FC<Props> = (props) => {
       const response = await api.post('/user/signin', data);
       setUser(Decrypt(response.data.result));
       insertUser(Decrypt(response.data.result));
+      setLoadingLogin(false);
     } catch (error) {
+      setLoadingLogin(false);
       alert(error.message);
     }
   }
@@ -74,7 +89,7 @@ const Auth: React.FC<Props> = (props) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user,  loading, signUp, signIn, signOut}}>
+    <AuthContext.Provider value={{ signed: !!user, user, loading, loadingLogin, signUp, signIn, signOut }}>
       {props.children}
     </AuthContext.Provider>
   )

@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext, ContextProps } from '../../contexts/auth';
 
 const Profile: React.FC = () => {
 
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext) as ContextProps;
 
   return (
-    <View style={styles.container} >
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >
       <View style={styles.infoProfile}>
         <View style={styles.userInfoSection}>
           <View style={styles.startView}>
@@ -17,12 +17,18 @@ const Profile: React.FC = () => {
               style={styles.image}
             />
             <View>
-              <Text style={[styles.title, { marginTop: 15, marginBottom: 5 }]}>{user.name}</Text>
+              <Text style={[styles.title, { marginTop: 15, marginBottom: 5 }]}>{user?.name}</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.userInfoSection}>
+          
+          <View style={styles.row}>
+            <Icon name='award' style={styles.colorOptional} size={20} />
+            <Text style={[styles.colorOptional, { marginLeft: 20 }]} >Gold</Text>
+          </View>
+
           <View style={styles.row}>
             <Icon name='map-pin' style={styles.colorOptional} size={20} />
             <Text style={[styles.colorOptional, { marginLeft: 20 }]} > R. Guimarães peixoto, 159 </Text>
@@ -33,7 +39,7 @@ const Profile: React.FC = () => {
           </View>
           <View style={styles.row}>
             <Icon name='mail' style={styles.colorOptional} size={20} />
-            <Text style={[styles.colorOptional, { marginLeft: 20 }]} > {user.email} </Text>
+            <Text style={[styles.colorOptional, { marginLeft: 20 }]} > {user?.email} </Text>
           </View>
         </View>
       </View>
@@ -57,7 +63,7 @@ const Profile: React.FC = () => {
         <Icon name="log-out" size={19} />
         <Text style={styles.textButton} >Sair</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -107,7 +113,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     marginVertical: 15,
-    marginLeft: 15, 
+    marginLeft: 15,
     fontSize: 19
   }
 })

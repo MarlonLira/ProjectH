@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, Text, Image,  } from 'react-native';
+import { View, StyleSheet, Text, Image, Switch } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext, ContextProps } from '../../contexts/auth';
 
 const Home: React.FC = () => {
 
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as ContextProps;
 
   return (
     <>

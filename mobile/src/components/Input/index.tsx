@@ -1,20 +1,22 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Text } from 'react-native';
 
 export interface Props {
   placeholder: string;
-  onChangeText?: (text: string) => void;
+  onChangeText: (text: string) => void;
   onEndEditing?: () => void;
   maxLength?: number;
   secureTextEntry?: boolean;
+  label?: string;
 }
 
 const Input: React.FC<Props> = (props) => {
   return (
     <View style={styles.textInput}>
+      {props.label ? <Text>{props.label}</Text> : null}
       <TextInput
         placeholder={props.placeholder}
-        placeholderTextColor="#666666"
+        placeholderTextColor="#666660"
         autoCapitalize="none"
         onChangeText={props.onChangeText}
         onEndEditing={props.onEndEditing}
