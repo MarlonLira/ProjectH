@@ -1,4 +1,5 @@
 import { AutoMap } from "@nartc/automapper";
+import { ConditionType } from "../commons/enums/conditionType";
 import { TransactionType } from "../commons/enums/transactionType";
 import { BaseModel } from "./base.model";
 
@@ -16,7 +17,7 @@ export class DonationModel extends BaseModel {
   public userId: number;
 
   @AutoMap()
-  public condition: string;
+  public condition: ConditionType;
 
   @AutoMap()
   public categoryId: number;

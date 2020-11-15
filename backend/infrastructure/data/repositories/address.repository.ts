@@ -1,29 +1,19 @@
 import { injectable } from "inversify";
 import { Op } from "sequelize";
 import { TransactionType } from "../../../application/commons/enums/transactionType";
-import { UserDAO, UserEntity } from "../../../domain/entities/user.entity";
-import { IUserRepository } from "../../../domain/interfaces/user-repository.interface";
+import { AddressDAO, AddressEntity } from "../../../domain/entities/address.entity";
+import { IAddressRepository } from "../../../domain/interfaces/address-repository.interface";
 
 @injectable()
-export class UserRepository implements IUserRepository {
+export class AddressRepository implements IAddressRepository {
 
-  getById(id: number): Promise<UserEntity> {
-    return new Promise((resolve, reject) => {
-      UserDAO.findByPk(id,
-        { include: [{ all: true }] }
-      )
-        .then((result: any) => resolve(new UserEntity(result)))
-        .catch((error: any) => reject(error));
-    });
-  }
-
-  save(item: UserEntity): Promise<UserEntity> {
+  save(item: AddressEntity): Promise<AddressEntity> {
     return new Promise(async (resolve, reject) => {
-      const _transaction = await UserDAO.sequelize.transaction();
-      UserDAO.create(item, { transaction: _transaction })
+      const _transaction = await AddressDAO.sequelize.transaction();
+      AddressDAO.create(item, { transaction: _transaction })
         .then(async (result: any) => {
           await _transaction.commit();
-          resolve(new UserEntity(result));
+          resolve(new AddressEntity(result));
         })
         .catch(async (error: any) => {
           await _transaction.rollback();
@@ -32,10 +22,10 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  update(item: UserEntity): Promise<any> {
+  update(item: AddressEntity): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const _transaction = await UserDAO.sequelize.transaction();
-      UserDAO.update(item, {
+      const _transaction = await AddressDAO.sequelize.transaction();
+      AddressDAO.update(item, {
         where: { id: item.id },
         transaction: _transaction,
         validate: false
@@ -53,8 +43,8 @@ export class UserRepository implements IUserRepository {
 
   delete(id: number): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      const _transaction = await UserDAO.sequelize.transaction();
-      UserDAO.update({
+      const _transaction = await AddressDAO.sequelize.transaction();
+      AddressDAO.update({
         status: TransactionType.DELETED
       },
         {
@@ -75,16 +65,23 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  getByEmail(email: string): Promise<UserEntity> {
+  getById(id: number): Promise<AddressEntity> {
     return new Promise((resolve, reject) => {
-      UserDAO.findOne({
-        where: {
-          email: { [Op.eq]: email },
-          status: { [Op.ne]: TransactionType.DELETED }
-        }
-      }).then((result: any) => resolve(new UserEntity(result)))
+      AddressDAO.findByPk(id)
+        .then((result: any) => resolve(new AddressEntity(result)))
         .catch((error: any) => reject(error));
     });
   }
 
+  getByUserId(userId: number): Promise<AddressEntity> {
+    return new Promise((resolve, reject) => {
+      AddressDAO.findOne({
+        where: {
+          userId: { [Op.eq]: userId }
+        }
+      })
+        .then((result: any) => resolve(new AddressEntity(result)))
+        .catch((error: any) => reject(error));
+    });
+  }
 }
