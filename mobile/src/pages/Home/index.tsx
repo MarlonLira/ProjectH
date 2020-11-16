@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, Text, Image,  } from 'react-native';
+import { View, StyleSheet, Text, Image, Switch } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext, ContextProps } from '../../contexts/auth';
 
 const Home: React.FC = () => {
 
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as ContextProps;
 
   return (
     <>
@@ -59,6 +59,38 @@ const Home: React.FC = () => {
             >
               <Image source={require('../../images/logo_red_icon.png')} />
             </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.034363,
+                longitude: -34.912431,
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')} />
+            </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.056459,
+                longitude: -34.886682
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')}/>
+            </Marker>
+
+            <Marker
+              coordinate={{
+                latitude: -8.060878,
+                longitude: -34.883592
+              }}
+              style={styles.mapMarker}
+            >
+              <Image source={require('../../images/logo_red_icon.png')} />
+            </Marker>
+
+             
           </MapView>
         </View>
       </View>

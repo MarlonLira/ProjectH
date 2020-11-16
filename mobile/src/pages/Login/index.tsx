@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, SafeAreaView, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Input from '../../components/Input';
 import Buttom from '../../components/Button';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext, ContextProps } from '../../contexts/auth';
 
 const Login = () => {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const navigation = useNavigation();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, loadingLogin } = useContext(AuthContext) as ContextProps;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,51 +25,61 @@ const Login = () => {
   }, [email, password])
 
   const handlerButton = () => {
-    signIn(email,password);
+    signIn(email, password);
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scroll}>
-        <Text style={styles.title}>Olá :)</Text>
-        <Text style={styles.subTitle}>Acesse sua conta.</Text>
+      {loadingLogin ?
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#000" />
+        </View> 
+        :
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
-        <View>
-          <Input
-            placeholder="Isnira o seu CPF ou e-mail"
-            onChangeText={text => setEmail(text)}
-          />
-          <Input
-            placeholder="Digite sua senha"
-            onChangeText={text => setPassword(text)}
-          />
-          <Buttom
-            text="Entrar"
-            onPress={handlerButton}
-            disabled={validate}
-          />
+          <Image source={require('../../images/logoLarge.png')} style={{ width: 200, height: 150 }}/>
 
-          <Text style={styles.textPass}>Esqueci minha senha</Text>
+          <Text style={styles.title}>Olá :)</Text>
+          <Text style={styles.subTitle}>Acesse sua conta.</Text>
 
-          <View style={styles.access}>
-            <Switch
-              trackColor={{ false: "#767577", true: "#9EE5DD" }}
-              thumbColor={isEnabled ? "#5ED4C6" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+          <View>
+            <Input
+              placeholder="E-mail"
+              onChangeText={text => setEmail(text)}
             />
-            <Text>Lembrar meu acesso</Text>
-          </View>
+            <Input
+              placeholder="Senha"
+              onChangeText={text => setPassword(text)}
+              secureTextEntry={true}
+            />
+            <Buttom
+              text="Entrar"
+              onPress={handlerButton}
+              disabled={validate}
+            />
 
-          <View style={styles.register}>
-            <Text>Novo por aqui?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Register')} activeOpacity={0.5}>
-              <Text style={styles.registerText}>Cadastre-se</Text>
-            </TouchableOpacity>
+            <Text style={styles.textPass}>Esqueci minha senha</Text>
+
+            <View style={styles.access}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#9EE5DD" }}
+                thumbColor={isEnabled ? "#5ED4C6" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+              <Text>Lembrar meu acesso</Text>
+            </View>
+
+            <View style={styles.register}>
+              <Text>Novo por aqui?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')} activeOpacity={0.5}>
+                <Text style={styles.registerText}>Cadastre-se</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      }
     </SafeAreaView>
   );
 }

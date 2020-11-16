@@ -8,6 +8,8 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Progress from '../pages/Progress';
 import Donation from '../pages/Donation';
+import Token from '../pages/Tokens';
+import Address from '../pages/Address';
 
 const AppStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -64,6 +66,16 @@ const AppRoutes = () => {
         <AppStack.Screen
           name="Donation"
           component={Donation}
+        />
+
+        <AppStack.Screen
+          name="Token"
+          component={Token}
+        />
+
+        <AppStack.Screen
+          name="Address"
+          component={Address}
         />
         
       </AppStack.Navigator>
