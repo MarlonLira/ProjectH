@@ -1,21 +1,19 @@
 ﻿# ProjectH
-###### Esse documento auxiliará no desenvolvimento do Backend da Aplicação
+###### Esse documento auxiliará no desenvolvimento da Aplicação
 
 ### Dados do projeto
 **Empresa:** \
-**Nome do app:** Easiness\
+**Nome do app:** Re Significa\
 **Site:** \
 **Site Temp:** \
 **Endpoint:** \
-**Tecnologias de desenvolvimento:**  [Node js](https://nodejs.org/en/docs/) | (Input - [Typescript](https://www.typescriptlang.org/docs/home.html)) -> (Output -- [Javascript](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript))
+**Tecnologias de desenvolvimento:** [React Js](https://pt-br.reactjs.org/) | [Node js](https://nodejs.org/en/docs/) | (Input - [Typescript](https://www.typescriptlang.org/docs/home.html)) -> (Output -- [Javascript](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript))
 
 ### Requisitos
 - [VS Code](https://code.visualstudio.com/ "Visual Studio Code") - Recomendado
 - [Node LTS](https://nodejs.org/en/ "Node Js") - Obrigatório
 - [Cmder](https://cmder.net/ "Cmder") - Recomendado
 - [Postman](https://www.getpostman.com/downloads/ "Postman") - Recomendado
-- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis " This a Visual Studio Code extension that automatically generates detailed JSDoc comments for both TypeScript and JavaScript files.") - Opcional
-
 
 ### Dependencias
 - [Nodemon](https://www.npmjs.com/package/nodemon "Nodemon")

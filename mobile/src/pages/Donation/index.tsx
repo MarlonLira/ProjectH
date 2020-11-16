@@ -1,106 +1,250 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import ButtonGoBack from '../../components/ButtonGoBack';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect, useContext, } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Switch, ActivityIndicator } from 'react-native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { Picker } from '@react-native-community/picker';
-import api from '../../services/api'
-import { AuthContext } from '../../contexts/auth';
-
+import { AuthContext, ContextProps } from '../../contexts/auth';
+import api from '../../services/api';
 import Input from '../../components/Input';
 import Buttom from '../../components/Button';
+import ButtonGoBack from '../../components/ButtonGoBack';
+import Lottie from 'lottie-react-native';
+import Animate from '../../animations/donation.json';
+import CustomProgressBar from '../../components/CustomProgressBar';
+import Dialog from "react-native-dialog";
 
 const Donation: React.FC = () => {
 
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) as ContextProps;
+
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    setIsEnabledHome(false);
+  }
+  const toggleSwitchHome = () => {
+    setIsEnabledHome(previousState => !previousState);
+    setIsEnabled(false);
+  }
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabledHome, setIsEnabledHome] = useState(false);
 
   const [amount, setAmount] = useState('');
   const [condition, setCondition] = useState('');
   const [category, setCategory] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [visibleDilog, setVisibleDilog] = useState(false);
+  const [token, setToken] = useState('');
   const [data, setData] = useState([]);
+  const [validade, setValidade] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [vlidateAdress, setValidateAddress] = useState(false);
 
   useEffect(() => {
     async function getCategories() {
       try {
         const response = await api.get('/categories');
         setData(response.data.result);
-
       } catch (error) {
         console.log(error.message);
       }
     }
-    getCategories();
-  })
+    if (data) {
+      getCategories();
+    }
+  }, []);
 
-  var allCategories = data.map((item: any, key: any) => (
-    <Picker.Item key={key} value={item.id} label={item.name} />
-  ))
+  useEffect(() => {
+    async function getAddress() {
+      try {
+        const response = await api.get(`/user/${user.id}`);
 
-  const handleButton = () => {
-    
+        if (response.data.result.address == null) {
+          setValidateAddress(true);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.log(error.response.data.message);
+        setLoading(false);
+      }
+    }
+    getAddress();
+  }, [])
+
+  useEffect(() => {
+    if (amount != '' && condition != '' && category != '' && (isEnabled || isEnabledHome)) {
+      setValidade(false);
+    } else {
+      setValidade(true);
+    }
+  }, [amount, condition, category, isEnabled, isEnabledHome]);
+ 
+  const handleButton = async () => {
+    setVisible(true);
+
     let data = {
       userId: user.id,
       condition: condition,
       amount: amount,
-      categoryId: category
+      categoryId: category,
     }
 
     try {
-      const response = api.post('/donation', data);
-      
-    } catch (error) {
-      alert(error.message)
-    }
 
+      const response = await api.post('/donation', data);
+      setVisible(false);
+      setToken(response.data.result.token);
+      showDialog();
+
+    } catch (error) {
+      setVisible(false);
+      alert(error.response.data.message);
+    }
   }
 
+  const showDialog = () => setVisibleDilog(true);
+
+  const hideDialog = () => {
+    setVisibleDilog(false);
+    navigation.dispatch(StackActions.popToTop());
+  };
+
+  const hideDialogAddress = () => {
+    setValidateAddress(false);
+    navigation.navigate('Address');
+  };
+
+  const RenderDisplayDialog = () => {
+
+    return (
+      <View style={{ alignItems: "center" }}>
+        <Dialog.Container visible={visibleDilog} >
+          {isEnabledHome ? <Dialog.Title>Parabéns!! Você solicitou uma coleta em seu endereço</Dialog.Title> : null}
+          {isEnabled ? <Dialog.Title>Parabéns!! Estamos esperando sua doação em um dos nossos pontos de coleta</Dialog.Title> : null}
+          <Dialog.Description>Foi gerado um token para acompanhamento da sua solicitação:</Dialog.Description>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.textToken}>{token}</Text>
+          </View>
+          <TouchableOpacity style={styles.ok} activeOpacity={0.5} onPress={hideDialog}>
+            <Text style={styles.textSign}>OK</Text>
+          </TouchableOpacity>
+        </Dialog.Container>
+      </View>
+    );
+  };
+
+  const RenderDisplayDialogAddress = () => {
+
+    return (
+      <View style={{ alignItems: "center" }}>
+        <Dialog.Container visible={vlidateAdress} >
+         <Dialog.Title>Ops... Verificamos que você ainda não tem endereço cadastrado.</Dialog.Title> 
+          <Dialog.Description>Vamos realizar o cadastro? O endereço é uma informação essencial para a coleta em sua residência.</Dialog.Description>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.textToken}>{token}</Text>
+          </View>
+          <TouchableOpacity style={styles.ok} activeOpacity={0.5} onPress={hideDialogAddress}>
+            <Text style={styles.textSign}>OK</Text>
+          </TouchableOpacity>
+        </Dialog.Container>
+      </View>
+    );
+  };
+
+  const RenderPickerCategories = () => {
+
+    return (
+      <View style={styles.category}>
+        <Text style={styles.labelPicker}>Categoria</Text>
+        <Picker
+          selectedValue={category}
+          onValueChange={(itemValue, itemIndex) => setCategory(itemValue as string)}
+          mode='dialog'
+          style={styles.picker}
+        >
+          <Picker.Item value={""} label="" />
+          {data.map((item: any, key: any) => (
+            <Picker.Item key={key} value={item.id} label={item.name} />
+          ))}
+        </Picker>
+      </View>
+    )
+  }
 
   return (
     <>
+
+      <CustomProgressBar visible={visible} />
+      <RenderDisplayDialog />
+      <RenderDisplayDialogAddress />
       <ButtonGoBack onPress={() => navigation.goBack()} />
-      <View style={styles.container} >
 
-        <Input
-          placeholder="Quantidade"
-          onChangeText={text => setAmount(text)}
-        />
-
-        <View style={styles.category}>
-          <Text style={styles.labelPicker}>Condição</Text>
-          <Picker
-            selectedValue={condition}
-            onValueChange={(itemValue, itemIndex) => setCondition(itemValue)}
-            mode='dialog'
-            style={styles.picker}
-          >
-            <Picker.Item value={""} label="" />
-            <Picker.Item value={"Reciclavel"} label="Reciclável" />
-            <Picker.Item value={"Usavel"} label="Usável" />
-          </Picker>
+      {loading ?
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#000" />
         </View>
+        :
+        <ScrollView style={styles.container} >
 
-        <View style={styles.category}>
-          <Text style={styles.labelPicker}>Categoria</Text>
-          <Picker
-            selectedValue={category}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-            mode='dialog'
-            style={styles.picker}
-          >
-            <Picker.Item value={""} label="" />
-            {allCategories}
-          </Picker>
-        </View>
+          <View style={{ alignItems: "center", marginTop: -80 }} >
+            <Lottie source={Animate} autoPlay loop autoSize resizeMode="contain" style={{ width: 400, height: 300 }} />
+          </View>
 
-        <Input
-          placeholder="Endereço para coleta"
-        />
+          <View>
+            <Input
+              label="Quantidade"
+              placeholder="Total de peças"
+              onChangeText={text => setAmount(text)}
+            />
 
-        <Buttom
-          onPress={() => { }}
-          text="Solicitar"
-        />
-      </View>
+            <View style={styles.category}>
+              <Text style={styles.labelPicker}>Condição</Text>
+              <Picker
+                selectedValue={condition}
+                onValueChange={(itemValue, itemIndex) => setCondition(itemValue.toString())}
+                mode='dialog'
+                style={styles.picker}
+              >
+                <Picker.Item value={""} label="" />
+                <Picker.Item value={"RE"} label="Reciclável" />
+                <Picker.Item value={"US"} label="Usável" />
+              </Picker>
+            </View>
+
+            <RenderPickerCategories />
+
+            <View style={styles.access}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#9EE5DD" }}
+                thumbColor={isEnabled ? "#5ED4C6" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+              <Text>Deixarei em um ponto de coleta</Text>
+            </View>
+
+            <View style={styles.access}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#9EE5DD" }}
+                thumbColor={isEnabledHome ? "#5ED4C6" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchHome}
+                value={isEnabledHome}
+              />
+              <Text>Preciso que busquem em meu endereço</Text>
+            </View>
+
+            <Buttom
+              onPress={handleButton}
+              text="Solicitar"
+              disabled={validade}
+            />
+
+          </View>
+        </ScrollView>
+      }
     </>
   )
 }
@@ -122,5 +266,28 @@ const styles = StyleSheet.create({
   },
   labelPicker: {
     marginTop: 30,
-  }
+  },
+  ok: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: '#000',
+    borderWidth: 1,
+    marginTop: 15
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000'
+  },
+  textToken: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  access: {
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
 })

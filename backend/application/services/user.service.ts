@@ -40,13 +40,18 @@ export class UserService implements IUserService {
   }
 
   save(item: UserModel): Promise<UserModel> {
-    return new Promise((resolve, reject) => {
-      item.status = TransactionType.ACTIVE;
-      item.password = Crypto.encrypt(item.password, CryptoType.PASSWORD);
-      this.repository.save(this.mapper.map(item, UserEntity))
-        .then((result: UserEntity) => resolve(this.mapper.map(result, UserModel)))
-        .catch(async (error: any) =>
-          reject(await this.log.critical('User', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
+    return new Promise(async (resolve, reject) => {
+      const _user = await this.repository.getByEmail(item.email);
+      if (_user) {
+        reject(await this.log.error('User', HttpCode.Bad_Request, HttpMessage.Already_Exists, undefined));
+      } else {
+        item.status = TransactionType.ACTIVE;
+        item.password = Crypto.encrypt(item.password, CryptoType.PASSWORD);
+        this.repository.save(this.mapper.map(item, UserEntity))
+          .then((result: UserEntity) => resolve(this.mapper.map(result, UserModel)))
+          .catch(async (error: any) =>
+            reject(await this.log.critical('User', HttpCode.Internal_Server_Error, HttpMessage.Unknown_Error, InnerException.decode(error))));
+      }
     });
   }
 
