@@ -4,9 +4,9 @@
 ### Dados do projeto
 **Empresa:** \
 **Nome do app:** Re Significa\
-**Site:** NA\
-**Site Temp:** NA\
-**Endpoint:** https://re-significa.herokuapp.com/\
+**Site:** \
+**Site Temp:** \
+**Endpoint:** https://re-significa.herokuapp.com/ \
 **Tecnologias de desenvolvimento:** [React Js](https://pt-br.reactjs.org/) | [Node js](https://nodejs.org/en/docs/) | (Input - [Typescript](https://www.typescriptlang.org/docs/home.html)) -> (Output -- [Javascript](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript))
 
 ### Requisitos
