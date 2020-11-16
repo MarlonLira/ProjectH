@@ -39,20 +39,20 @@
 **/** - Arquivos de códigos da aplicação.\
 **presentation/app.ts** - Arquivo inicial.\
 **presentation/config.json** - Arquivo com configurações do projeto como configurações de banco de dados.\
-**presentation/controllers/** - pasta com os controllers da aplicação.\
-**application/autoMappers/** - pasta com os automappers da aplicação.\
-**application/commons/** - pasta com os arquivos comuns a toda aplicação.\
-**application/interfaces/** - pasta com as interfaces dos services da aplicação.\
-**application/models/** - pasta com os models da aplicação.\
-**application/services/** - pasta com os services da aplicação.\
-**domain/entities/** - pasta com as entities da aplicação.\
-**domain/interfaces/** - pasta com as interfaces dos repositories da aplicação.\
-**infrastructure/crosscutting/ioc/** - pasta com as configurações da inversão de controle da aplicação.\
+**presentation/controllers/** - Controllers da aplicação.\
+**application/autoMappers/** - Automappers da aplicação.\
+**application/commons/** - Arquivos comuns a toda aplicação.\
+**application/interfaces/** -Interfaces dos services da aplicação.\
+**application/models/** - Models da aplicação.\
+**application/services/** - Services da aplicação.\
+**domain/entities/** -Entities da aplicação.\
+**domain/interfaces/** - Interfaces dos repositories da aplicação.\
+**infrastructure/crosscutting/ioc/** - Configurações da inversão de controle da aplicação.\
 **infrastructure/crosscutting/ioc/inversify.config.ts** - Arquivo responsável pela injeção de dependencias.\
-**infrastructure/data/** - pasta com as configurações do banco, persistência de dados e etc.\
-**infrastructure/data/context/** - pasta com as configurações do banco de dados da aplicação.\
-**infrastructure/data/extensions/** - pasta com as extensões da aplicação.\
-**infrastructure/data/repositories/** - pasta com os repositories da aplicação.\
+**infrastructure/data/** - Configurações do banco, persistência de dados e etc.\
+**infrastructure/data/context/** - Configurações do banco de dados da aplicação.\
+**infrastructure/data/extensions/** - Extensões da aplicação.\
+**infrastructure/data/repositories/** - Repositories da aplicação.\
 **gitignore** - Configura arquivos a serem ignorados pelo git.\
 **package.json** - Arquivo de dependências e detalhes da aplicacação.\
 **tsconfig.json** - Arquivo com configurações do transpile da aplicação.\
