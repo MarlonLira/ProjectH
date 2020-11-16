@@ -41,20 +41,21 @@ export class Logger {
     console.log(unkn(`${dateTimeNow()} UNKN [${name === undefined || name === 'String' ? entity : name}] ${message}`));
   }
 
-  static Default(log: LogModel | any) {
+  static Default(log: LogModel) {
+    const _msg  = log.obj ? log.obj : log.message;
     switch (log.level) {
       case LogLevel.ERROR:
-        return Logger.Error(log.source, log.obj);
+        return Logger.Error(log.source, _msg);
       case LogLevel.WARNING:
-        return Logger.Warn(log.source, log.obj);
+        return Logger.Warn(log.source, _msg);
       case LogLevel.CRITICAL:
-        return Logger.Critical(log.source, log.obj);
+        return Logger.Critical(log.source, _msg);
       case LogLevel.UNKNOWN:
-        return Logger.Unknown(log.source, log.obj);
+        return Logger.Unknown(log.source, _msg);
       case LogLevel.INFO:
-        return Logger.Info(log.source, log.obj);
+        return Logger.Info(log.source, _msg);
       default:
-        return Logger.Unknown(log.source, log.obj);
+        return Logger.Unknown(log.source, _msg);
     }
   }
 }
