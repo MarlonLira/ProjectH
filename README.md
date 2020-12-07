@@ -2,11 +2,11 @@
 ###### Esse documento auxiliará no desenvolvimento da Aplicação
 
 ### Dados do projeto
-**Empresa:** \
+**Empresa:** SSTEC \
 **Nome do app:** Re Significa\
 **Site:** \
 **Site Temp:** \
-**Endpoint:** https://re-significa.herokuapp.com/ \
+**Endpoint:** \
 **Tecnologias de desenvolvimento:** [React Js](https://pt-br.reactjs.org/) | [Node js](https://nodejs.org/en/docs/) | (Input - [Typescript](https://www.typescriptlang.org/docs/home.html)) -> (Output -- [Javascript](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript))
 
 ### Requisitos
